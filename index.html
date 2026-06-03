@@ -12,14 +12,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--display);min-heigh
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:0 28px;height:56px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;}
 .logo{font-size:15px;font-weight:800;letter-spacing:.12em;display:flex;align-items:center;gap:10px;}
 .logo-tag{background:var(--accent);color:#fff;font-size:9px;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:3px;}
-.topbar-meta{display:flex;align-items:center;gap:16px;font-family:var(--mono);font-size:11px;color:var(--text2);}
+.demo-tag{background:var(--amber);color:#000;font-size:9px;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:3px;}
+.topbar-meta{display:flex;align-items:center;gap:12px;font-family:var(--mono);font-size:11px;color:var(--text2);}
 .market-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:4px;font-size:10px;font-weight:600;letter-spacing:.06em;border:1px solid;}
 .market-pill.up{background:rgba(34,197,94,.1);border-color:var(--green-dim);color:var(--green);}
 .market-pill.warn{background:rgba(245,158,11,.1);border-color:var(--amber-dim);color:var(--amber);}
 .market-pill.dn{background:rgba(239,68,68,.1);border-color:var(--red-dim);color:var(--red);}
 .dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
+.btn-group{display:flex;gap:6px;}
 .refresh-btn{display:flex;align-items:center;gap:6px;background:var(--accent);color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;transition:background .15s;}
 .refresh-btn:hover{background:var(--accent2);}
+.demo-btn{display:flex;align-items:center;gap:6px;background:var(--amber);color:#000;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;transition:opacity .15s;}
+.demo-btn:hover{opacity:.85;}
 @keyframes spin{to{transform:rotate(360deg);}}
 .spin{animation:spin 1s linear infinite;}
 .summary-strip{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
@@ -31,6 +35,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--display);min-heigh
 .stat-val.amber{color:var(--amber);}
 .stat-val.blue{color:var(--accent);}
 .stat-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;}
+.demo-banner{background:rgba(245,158,11,.1);border-bottom:1px solid var(--amber-dim);padding:8px 28px;font-family:var(--mono);font-size:11px;color:var(--amber);display:none;align-items:center;gap:10px;}
+.demo-banner.show{display:flex;}
 .controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 28px;background:var(--surface2);border-bottom:1px solid var(--border);}
 .search-wrap{position:relative;min-width:200px;}
 .search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);}
@@ -142,17 +148,27 @@ textarea.note-in:focus{border-color:var(--accent);}
 </head>
 <body>
 <header class="topbar">
-  <div class="logo">3S DASHBOARD<span class="logo-tag">US</span></div>
+  <div class="logo">3S DASHBOARD<span class="logo-tag">US</span><span class="demo-tag" id="demoTag" style="display:none">DEMO</span></div>
   <div class="topbar-meta">
     <div id="tSpx" class="market-pill up"><div class="dot"></div>SPX</div>
     <div id="tNdx" class="market-pill up"><div class="dot"></div>NDX</div>
     <span id="syncLbl" style="font-size:9px;color:var(--text3);">—</span>
-    <button class="refresh-btn" id="runBtn" onclick="runScreener()">
-      <svg id="runIco" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-      RUN SCREEN
-    </button>
+    <div class="btn-group">
+      <button class="demo-btn" onclick="loadDemo()">
+        &#9654; DEMO MODE
+      </button>
+      <button class="refresh-btn" id="runBtn" onclick="runScreener()">
+        <svg id="runIco" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        RUN SCREEN
+      </button>
+    </div>
   </div>
 </header>
+
+<div class="demo-banner" id="demoBanner">
+  &#9888; DEMO MODE — Sample data loaded for testing. Click RUN SCREEN when you have API credits to load live data.
+</div>
+
 <div class="summary-strip">
   <div class="stat-box"><div class="stat-label">Total Passed</div><div class="stat-val blue" id="sTotal">—</div><div class="stat-sub">this run</div></div>
   <div class="stat-box"><div class="stat-label">New Today</div><div class="stat-val green" id="sNew">—</div><div class="stat-sub">added since last run</div></div>
@@ -192,7 +208,7 @@ textarea.note-in:focus{border-color:var(--accent);}
     <th>Accum</th><th>Mkt Cap</th><th>Theme</th><th>Status</th><th>Notes</th><th>Days</th>
   </tr></thead>
   <tbody id="tBody">
-    <tr><td colspan="17" class="loading-st">Click RUN SCREEN to load the latest data</td></tr>
+    <tr><td colspan="17" class="loading-st">Click DEMO MODE to preview with sample data, or RUN SCREEN for live data</td></tr>
   </tbody>
 </table>
 </div>
@@ -246,11 +262,41 @@ const PROXY = 'https://3s-proxy.emailsanjeevkaushik.workers.dev';
 const SK = {stocks:'s_data',ov:'s_ov',prev:'s_prev',sync:'s_sync',mkt:'s_mkt'};
 let all=[], filtered=[], OV={}, prevSet=new Set(), cur=null, activeF='all';
 
-// ── Storage helpers ──
 function lsGet(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){console.warn('storage',e);}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){console.warn(e);}}
 
-// ── Boot ──
+// ── DEMO DATA ──
+const DEMO_STOCKS = [
+  {ticker:'NVDA',price:1208.88,price_chg_pct:3.21,volume:48200000,avg_vol_20d:44100000,mktcap_b:2970,stage2:true,rs_proprietary:99,rs_tradingview:98,eps_growth_qtr:265,eps_growth_annual:220,revenue_growth_qtr:122,revenue_growth_annual:98,roe:0.85,de_ratio:0.4,accum_score:5,moat:'Elite',theme:'AI Infrastructure',industry:'Semiconductors',yield:0.03,distance_from_52w_high_pct:1.2,new_today:true,date_added:'2026-06-03',days_on_list:1},
+  {ticker:'META',price:596.42,price_chg_pct:1.87,volume:18900000,avg_vol_20d:17200000,mktcap_b:1520,stage2:true,rs_proprietary:96,rs_tradingview:95,eps_growth_qtr:114,eps_growth_annual:73,revenue_growth_qtr:27,revenue_growth_annual:22,roe:0.36,de_ratio:0.3,accum_score:4,moat:'Elite',theme:'AI Diffusion',industry:'Internet Content',yield:0.4,distance_from_52w_high_pct:3.1,new_today:true,date_added:'2026-06-03',days_on_list:1},
+  {ticker:'AXON',price:368.20,price_chg_pct:0.94,volume:1340000,avg_vol_20d:1280000,mktcap_b:29.4,stage2:true,rs_proprietary:94,rs_tradingview:92,eps_growth_qtr:88,eps_growth_annual:62,revenue_growth_qtr:34,revenue_growth_annual:29,roe:0.22,de_ratio:0.8,accum_score:4,moat:'High',theme:'Multipolar World',industry:'Aerospace & Defense',yield:0,distance_from_52w_high_pct:4.5,new_today:false,date_added:'2026-05-28',days_on_list:6},
+  {ticker:'CELH',price:42.15,price_chg_pct:-1.22,volume:6800000,avg_vol_20d:7100000,mktcap_b:9.3,stage2:true,rs_proprietary:91,rs_tradingview:89,eps_growth_qtr:142,eps_growth_annual:95,revenue_growth_qtr:48,revenue_growth_annual:38,roe:0.31,de_ratio:0.1,accum_score:3,moat:'Med',theme:'Longevity Economy',industry:'Beverages',yield:0,distance_from_52w_high_pct:12.3,new_today:false,date_added:'2026-05-20',days_on_list:14},
+  {ticker:'SMCI',price:892.44,price_chg_pct:2.15,volume:3900000,avg_vol_20d:3700000,mktcap_b:52.1,stage2:true,rs_proprietary:93,rs_tradingview:91,eps_growth_qtr:308,eps_growth_annual:228,revenue_growth_qtr:103,revenue_growth_annual:87,roe:0.28,de_ratio:1.2,accum_score:4,moat:'High',theme:'AI Infrastructure',industry:'Computer Hardware',yield:0,distance_from_52w_high_pct:6.8,new_today:true,date_added:'2026-06-03',days_on_list:1},
+  {ticker:'DUOL',price:264.80,price_chg_pct:0.55,volume:1100000,avg_vol_20d:980000,mktcap_b:11.2,stage2:true,rs_proprietary:90,rs_tradingview:88,eps_growth_qtr:235,eps_growth_annual:180,revenue_growth_qtr:43,revenue_growth_annual:36,roe:0.12,de_ratio:0.0,accum_score:4,moat:'High',theme:'AI Diffusion',industry:'Education Technology',yield:0,distance_from_52w_high_pct:5.2,new_today:false,date_added:'2026-05-25',days_on_list:9},
+  {ticker:'CRWD',price:388.72,price_chg_pct:1.44,volume:4200000,avg_vol_20d:3900000,mktcap_b:95.4,stage2:true,rs_proprietary:92,rs_tradingview:90,eps_growth_qtr:128,eps_growth_annual:94,revenue_growth_qtr:33,revenue_growth_annual:28,roe:0.18,de_ratio:0.5,accum_score:5,moat:'High',theme:'Multipolar World',industry:'Cybersecurity',yield:0,distance_from_52w_high_pct:2.9,new_today:false,date_added:'2026-05-15',days_on_list:19},
+  {ticker:'PLTR',price:28.44,price_chg_pct:2.88,volume:72000000,avg_vol_20d:68000000,mktcap_b:60.2,stage2:true,rs_proprietary:95,rs_tradingview:93,eps_growth_qtr:68,eps_growth_annual:42,revenue_growth_qtr:27,revenue_growth_annual:21,roe:0.09,de_ratio:0.0,accum_score:4,moat:'High',theme:'AI Infrastructure',industry:'Software',yield:0,distance_from_52w_high_pct:8.1,new_today:false,date_added:'2026-05-10',days_on_list:24},
+  {ticker:'VRTX',price:482.90,price_chg_pct:-0.31,volume:1800000,avg_vol_20d:1650000,mktcap_b:124.3,stage2:true,rs_proprietary:88,rs_tradingview:86,eps_growth_qtr:62,eps_growth_annual:48,revenue_growth_qtr:26,revenue_growth_annual:22,roe:0.29,de_ratio:0.0,accum_score:3,moat:'Elite',theme:'Longevity Economy',industry:'Biotechnology',yield:0,distance_from_52w_high_pct:7.4,new_today:false,date_added:'2026-05-18',days_on_list:16},
+  {ticker:'ASTS',price:38.72,price_chg_pct:4.12,volume:22000000,avg_vol_20d:19500000,mktcap_b:8.4,stage2:true,rs_proprietary:97,rs_tradingview:95,eps_growth_qtr:145,eps_growth_annual:98,revenue_growth_qtr:68,revenue_growth_annual:52,roe:0.08,de_ratio:0.6,accum_score:5,moat:'High',theme:'Multipolar World',industry:'Telecom Services',yield:0,distance_from_52w_high_pct:3.4,new_today:true,date_added:'2026-06-03',days_on_list:1},
+  {ticker:'MSTR',price:1644.20,price_chg_pct:5.44,volume:8800000,avg_vol_20d:8200000,mktcap_b:42.1,stage2:true,rs_proprietary:98,rs_tradingview:96,eps_growth_qtr:420,eps_growth_annual:310,revenue_growth_qtr:26,revenue_growth_annual:21,roe:0.14,de_ratio:2.1,accum_score:4,moat:'Med',theme:'K-Shaped Economy',industry:'Software',yield:0,distance_from_52w_high_pct:9.2,new_today:false,date_added:'2026-05-22',days_on_list:12},
+  {ticker:'AEHR',price:18.44,price_chg_pct:-2.11,volume:980000,avg_vol_20d:920000,mktcap_b:0.6,stage2:false,rs_proprietary:72,rs_tradingview:70,eps_growth_qtr:48,eps_growth_annual:32,revenue_growth_qtr:28,revenue_growth_annual:24,roe:0.18,de_ratio:0.1,accum_score:2,moat:'Med',theme:'AI Infrastructure',industry:'Semiconductors',yield:0,distance_from_52w_high_pct:28.4,new_today:false,date_added:'2026-05-12',days_on_list:22},
+  {ticker:'RXRX',price:12.88,price_chg_pct:1.22,volume:6400000,avg_vol_20d:5900000,mktcap_b:2.8,stage2:true,rs_proprietary:85,rs_tradingview:83,eps_growth_qtr:92,eps_growth_annual:67,revenue_growth_qtr:38,revenue_growth_annual:31,roe:0.06,de_ratio:0.4,accum_score:3,moat:'Med',theme:'Longevity Economy',industry:'Biotechnology',yield:0,distance_from_52w_high_pct:14.2,new_today:false,date_added:'2026-05-28',days_on_list:6},
+  {ticker:'TSM',price:168.44,price_chg_pct:0.88,volume:14200000,avg_vol_20d:13800000,mktcap_b:874.2,stage2:true,rs_proprietary:89,rs_tradingview:87,eps_growth_qtr:76,eps_growth_annual:58,revenue_growth_qtr:29,revenue_growth_annual:25,roe:0.28,de_ratio:0.4,accum_score:4,moat:'Elite',theme:'AI Infrastructure',industry:'Semiconductors',yield:1.8,distance_from_52w_high_pct:4.8,new_today:false,date_added:'2026-05-05',days_on_list:29},
+  {ticker:'APP',price:312.44,price_chg_pct:1.65,volume:4800000,avg_vol_20d:4400000,mktcap_b:108.2,stage2:true,rs_proprietary:93,rs_tradingview:91,eps_growth_qtr:186,eps_growth_annual:142,revenue_growth_qtr:46,revenue_growth_annual:38,roe:0.22,de_ratio:1.1,accum_score:4,moat:'High',theme:'AI Diffusion',industry:'Software',yield:0,distance_from_52w_high_pct:6.1,new_today:false,date_added:'2026-05-14',days_on_list:20}
+];
+
+function loadDemo(){
+  all = DEMO_STOCKS;
+  prevSet = new Set(DEMO_STOCKS.map(s=>s.ticker));
+  document.getElementById('demoTag').style.display='inline';
+  document.getElementById('demoBanner').classList.add('show');
+  document.getElementById('syncLbl').textContent = 'Demo data — '+new Date().toLocaleDateString('en-AU');
+  document.getElementById('sUni').textContent = '~5,000';
+  renderMkt({spx_direction:'Confirmed Uptrend',ndx_direction:'Confirmed Uptrend',spx_dist_days:2,ndx_dist_days:1});
+  updateSummary(0);
+  applyFilters();
+  toast('Demo mode loaded — '+all.length+' sample stocks', 'ok');
+}
+
 function init(){
   OV = lsGet(SK.ov)||{};
   prevSet = new Set(lsGet(SK.prev)||[]);
@@ -262,185 +308,112 @@ function init(){
   if(mkt) renderMkt(mkt);
 }
 
-// ── Screener ──
 async function runScreener(){
   const btn=document.getElementById('runBtn');
   const ico=document.getElementById('runIco');
   btn.disabled=true; ico.classList.add('spin');
-  document.getElementById('tBody').innerHTML='<tr><td colspan="17" class="loading-st"><div class="spinner"></div><div>Running screen — this takes 30-60 seconds...</div></td></tr>';
-
+  document.getElementById('demoTag').style.display='none';
+  document.getElementById('demoBanner').classList.remove('show');
+  document.getElementById('tBody').innerHTML='<tr><td colspan="17" class="loading-st"><div class="spinner"></div><div>Running screen — 30-60 seconds...</div></td></tr>';
   const today = new Date().toISOString().split('T')[0];
-
-  const prompt = `You are a stock screening engine. Search Yahoo Finance screener for US stocks passing ALL these criteria:
+  const prompt = `You are a stock screening engine. Search Yahoo Finance for US stocks passing ALL criteria:
 1. Price >= $5.00
-2. Daily volume >= 500,000 shares  
+2. Daily volume >= 500,000 shares
 3. 20-day average volume >= 500,000 shares
 4. Market cap >= $300M USD
 5. Revenue growth quarterly YoY >= 25%
 6. Revenue growth annual YoY >= 20%
 7. EPS diluted growth YoY >= 25%
-8. Stage 2 uptrend: Price > SMA50 > SMA150 > SMA200
+8. Stage 2: Price > SMA50 > SMA150 > SMA200
 
-For each passing stock calculate:
-- rs_proprietary: 1-99 percentile rank of 12-month price performance, weighted: last 3 months = 40%, prior 9 months = 60%, ranked vs all US stocks
-- rs_tradingview: 1-99 relative strength vs SPY over past 52 weeks
-- accum_score: 1-5 score for institutional accumulation based on volume/price behavior
-- moat: Elite / High / Med / Low
-- theme: pick ONE from: AI Infrastructure, Longevity Economy, Multipolar World, Energy Transition, AI Diffusion, Supply Chain Resilience, Nuclear Renaissance, K-Shaped Economy, US Infrastructure, Other
+For each stock calculate:
+- rs_proprietary: 1-99 percentile of 12-month price perf, last 3 months=40%, prior 9 months=60%
+- rs_tradingview: 1-99 vs SPY over 52 weeks
+- accum_score: 1-5 institutional accumulation
+- moat: Elite/High/Med/Low
+- theme: AI Infrastructure|Longevity Economy|Multipolar World|Energy Transition|AI Diffusion|Supply Chain Resilience|Nuclear Renaissance|K-Shaped Economy|US Infrastructure|Other
 
-Today is ${today}. Return up to 60 strongest stocks by RS rating.
-
-YOU MUST respond with ONLY this exact JSON structure and nothing else — no explanation, no markdown, no code fences:
-{"run_date":"${today}","universe_scanned":5000,"stocks":[{"ticker":"NVDA","price":950.25,"price_chg_pct":1.5,"volume":45000000,"avg_vol_20d":42000000,"mktcap_b":2400,"stage2":true,"rs_proprietary":98,"rs_tradingview":97,"eps_growth_qtr":265,"eps_growth_annual":220,"revenue_growth_qtr":122,"revenue_growth_annual":98,"roe":0.85,"de_ratio":0.4,"accum_score":5,"moat":"Elite","theme":"AI Infrastructure","industry":"Semiconductors","yield":0.03,"distance_from_52w_high_pct":2.1}],"market":{"spx_direction":"Confirmed Uptrend","ndx_direction":"Confirmed Uptrend","spx_dist_days":2,"ndx_dist_days":1}}
-
-Replace the example NVDA entry with REAL current data for stocks actually passing your screen. Return real tickers only.`;
-
-  try {
-    const resp = await fetch(PROXY, {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 8000,
-        tools: [{type:'web_search_20250305', name:'web_search'}],
-        messages: [{role:'user', content: prompt}]
-      })
+Today: ${today}. Return up to 60 stocks sorted by rs_proprietary descending.
+Respond with ONLY valid JSON, no markdown:
+{"run_date":"${today}","universe_scanned":5000,"stocks":[{"ticker":"","price":0,"price_chg_pct":0,"volume":0,"avg_vol_20d":0,"mktcap_b":0,"stage2":true,"rs_proprietary":0,"rs_tradingview":0,"eps_growth_qtr":0,"eps_growth_annual":0,"revenue_growth_qtr":0,"revenue_growth_annual":0,"roe":0,"de_ratio":0,"accum_score":0,"moat":"","theme":"","industry":"","yield":0,"distance_from_52w_high_pct":0}],"market":{"spx_direction":"Confirmed Uptrend","ndx_direction":"Confirmed Uptrend","spx_dist_days":0,"ndx_dist_days":0}}`;
+  try{
+    const resp = await fetch(PROXY,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:8000,tools:[{type:'web_search_20250305',name:'web_search'}],messages:[{role:'user',content:prompt}]})
     });
-
-    if(!resp.ok){
-      const errText = await resp.text();
-      throw new Error('Proxy error ' + resp.status + ': ' + errText);
-    }
-
+    if(!resp.ok) throw new Error('HTTP '+resp.status+': '+(await resp.text()).substring(0,200));
     const data = await resp.json();
-    console.log('Raw API response:', JSON.stringify(data).substring(0,500));
-
-    // Handle Anthropic error responses
-    if(data.type === 'error'){
-      throw new Error(data.error?.message || JSON.stringify(data.error));
-    }
-
-    // Extract text from content blocks
-    if(!data.content || !Array.isArray(data.content)){
-      throw new Error('Unexpected response shape: ' + JSON.stringify(data).substring(0,300));
-    }
-
-    const txt = data.content
-      .filter(b => b.type === 'text')
-      .map(b => b.text)
-      .join('');
-
-    console.log('Text content:', txt.substring(0,500));
-
-    // Extract JSON — find outermost { }
-    const start = txt.indexOf('{');
-    const end = txt.lastIndexOf('}');
-    if(start === -1 || end === -1) throw new Error('No JSON found in response. Got: ' + txt.substring(0,200));
-
-    const jsonStr = txt.substring(start, end+1);
-    const res = JSON.parse(jsonStr);
-
-    if(!res.stocks || !Array.isArray(res.stocks)){
-      throw new Error('Response missing stocks array. Keys: ' + Object.keys(res).join(', '));
-    }
-
-    // Delta tracking
-    const curSet = new Set(res.stocks.map(s => s.ticker));
-    const newT = new Set([...curSet].filter(t => !prevSet.has(t)));
-    const remCt = [...prevSet].filter(t => !curSet.has(t)).length;
-    const exMap = {};
-    all.forEach(s => exMap[s.ticker] = s);
-
-    all = res.stocks.map(s => ({
-      ...s,
-      new_today: newT.has(s.ticker),
-      date_added: exMap[s.ticker]?.date_added || res.run_date,
-      days_on_list: exMap[s.ticker]
-        ? Math.floor((new Date(res.run_date) - new Date(exMap[s.ticker].date_added)) / 86400000) + 1
-        : 1
-    }));
-
-    const syncStr = new Date().toLocaleString('en-AU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
-    lsSet(SK.stocks, all);
-    lsSet(SK.prev, [...curSet]);
-    lsSet(SK.sync, syncStr);
-    lsSet(SK.mkt, res.market);
-    prevSet = curSet;
-
-    document.getElementById('syncLbl').textContent = 'Last run: ' + syncStr;
-    document.getElementById('sUni').textContent = (res.universe_scanned||'?').toLocaleString();
+    if(data.type==='error') throw new Error(data.error?.message||JSON.stringify(data.error));
+    if(!data.content||!Array.isArray(data.content)) throw new Error('Bad response shape');
+    const txt = data.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    const start=txt.indexOf('{'), end=txt.lastIndexOf('}');
+    if(start===-1||end===-1) throw new Error('No JSON found in response');
+    const res = JSON.parse(txt.substring(start,end+1));
+    if(!res.stocks||!Array.isArray(res.stocks)) throw new Error('Missing stocks array');
+    const curSet=new Set(res.stocks.map(s=>s.ticker));
+    const newT=new Set([...curSet].filter(t=>!prevSet.has(t)));
+    const remCt=[...prevSet].filter(t=>!curSet.has(t)).length;
+    const exMap={};all.forEach(s=>exMap[s.ticker]=s);
+    all=res.stocks.map(s=>({...s,new_today:newT.has(s.ticker),date_added:exMap[s.ticker]?.date_added||res.run_date,days_on_list:exMap[s.ticker]?Math.floor((new Date(res.run_date)-new Date(exMap[s.ticker].date_added))/86400000)+1:1}));
+    const syncStr=new Date().toLocaleString('en-AU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    lsSet(SK.stocks,all);lsSet(SK.prev,[...curSet]);lsSet(SK.sync,syncStr);lsSet(SK.mkt,res.market);
+    prevSet=curSet;
+    document.getElementById('syncLbl').textContent='Last run: '+syncStr;
+    document.getElementById('sUni').textContent=(res.universe_scanned||'?').toLocaleString();
     if(res.market) renderMkt(res.market);
-    updateSummary(remCt);
-    applyFilters();
-    toast('Screen complete — ' + all.length + ' stocks passed', 'ok');
-
-  } catch(e) {
-    console.error('Screen error:', e);
-    document.getElementById('tBody').innerHTML =
-      '<tr><td colspan="17" class="err-st">Screen error<div class="err-d">' + e.message + '</div></td></tr>';
-    toast('Error: ' + e.message.substring(0,80), 'err');
-  } finally {
-    btn.disabled = false;
-    ico.classList.remove('spin');
+    updateSummary(remCt);applyFilters();
+    toast('Screen complete — '+all.length+' stocks passed','ok');
+  }catch(e){
+    document.getElementById('tBody').innerHTML='<tr><td colspan="17" class="err-st">Screen error<div class="err-d">'+e.message+'</div></td></tr>';
+    toast('Error: '+e.message.substring(0,80),'err');
+  }finally{
+    btn.disabled=false;ico.classList.remove('spin');
   }
 }
 
-// ── Filters ──
-function setF(el, f){
-  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active','a-pass','a-watch','a-new'));
-  activeF = f;
-  el.classList.add('active');
-  if(f==='PASS') el.classList.add('a-pass');
-  if(f==='WATCH') el.classList.add('a-watch');
-  if(f==='NEW') el.classList.add('a-new');
+function setF(el,f){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active','a-pass','a-watch','a-new'));
+  activeF=f; el.classList.add('active');
+  if(f==='PASS')el.classList.add('a-pass');
+  if(f==='WATCH')el.classList.add('a-watch');
+  if(f==='NEW')el.classList.add('a-new');
   applyFilters();
 }
 
 function applyFilters(){
-  const q = document.getElementById('qInput').value.toLowerCase();
-  const sort = document.getElementById('sortSel').value;
-  filtered = all.filter(s => {
-    const st = (OV[s.ticker]||{}).status||'WATCH';
-    if(activeF==='NEW' && !s.new_today) return false;
-    if(activeF!=='all' && activeF!=='NEW' && st!==activeF) return false;
-    if(q && !s.ticker.toLowerCase().includes(q) && !(s.theme||'').toLowerCase().includes(q) && !(s.industry||'').toLowerCase().includes(q)) return false;
+  const q=document.getElementById('qInput').value.toLowerCase();
+  const sort=document.getElementById('sortSel').value;
+  filtered=all.filter(s=>{
+    const st=(OV[s.ticker]||{}).status||'WATCH';
+    if(activeF==='NEW'&&!s.new_today)return false;
+    if(activeF!=='all'&&activeF!=='NEW'&&st!==activeF)return false;
+    if(q&&!s.ticker.toLowerCase().includes(q)&&!(s.theme||'').toLowerCase().includes(q)&&!(s.industry||'').toLowerCase().includes(q))return false;
     return true;
   });
-  const sorters = {
-    rsp:(a,b)=>(b.rs_proprietary||0)-(a.rs_proprietary||0),
-    rstv:(a,b)=>(b.rs_tradingview||0)-(a.rs_tradingview||0),
-    eps:(a,b)=>(b.eps_growth_qtr||0)-(a.eps_growth_qtr||0),
-    date:(a,b)=>new Date(b.date_added)-new Date(a.date_added),
-    price:(a,b)=>(b.price||0)-(a.price||0),
-    mktcap:(a,b)=>(b.mktcap_b||0)-(a.mktcap_b||0)
-  };
+  const sorters={rsp:(a,b)=>(b.rs_proprietary||0)-(a.rs_proprietary||0),rstv:(a,b)=>(b.rs_tradingview||0)-(a.rs_tradingview||0),eps:(a,b)=>(b.eps_growth_qtr||0)-(a.eps_growth_qtr||0),date:(a,b)=>new Date(b.date_added)-new Date(a.date_added),price:(a,b)=>(b.price||0)-(a.price||0),mktcap:(a,b)=>(b.mktcap_b||0)-(a.mktcap_b||0)};
   filtered.sort(sorters[sort]||sorters.rsp);
-  filtered.sort((a,b) => (b.new_today?1:0)-(a.new_today?1:0));
+  filtered.sort((a,b)=>(b.new_today?1:0)-(a.new_today?1:0));
   renderTable();
-  document.getElementById('cBadge').textContent = filtered.length + ' stocks';
+  document.getElementById('cBadge').textContent=filtered.length+' stocks';
 }
 
-// ── Table ──
 function renderTable(){
-  const tb = document.getElementById('tBody');
-  if(!filtered.length){
-    tb.innerHTML = '<tr><td colspan="17" class="empty-st">No stocks match current filters</td></tr>';
-    return;
-  }
-  tb.innerHTML = filtered.map(s => {
-    const ov = OV[s.ticker]||{};
-    const st = ov.status||'WATCH';
-    const notes = ov.notes||[];
-    const ibd = ov.ibd||null;
-    const lastNote = notes.length ? notes[notes.length-1].text : '';
-    const cp = s.price_chg_pct||0;
-    const eq = s.eps_growth_qtr||0;
-    const rq = s.revenue_growth_qtr||0;
-    const rp = Math.min(100,Math.max(0,s.rs_proprietary||0));
-    let dots='';
-    for(let i=1;i<=5;i++) dots += '<div class="adot '+(i<=(s.accum_score||0)?'on':'off')+'"></div>';
-    const mc = s.mktcap_b>=1000 ? (s.mktcap_b/1000).toFixed(1)+'T' : s.mktcap_b+'B';
-    return '<tr class="'+(s.new_today?'new-row':'')+'" onclick="openD(\''+s.ticker+'\')">'+
+  const tb=document.getElementById('tBody');
+  if(!filtered.length){tb.innerHTML='<tr><td colspan="17" class="empty-st">No stocks match current filters</td></tr>';return;}
+  tb.innerHTML=filtered.map(s=>{
+    const ov=OV[s.ticker]||{};
+    const st=ov.status||'WATCH';
+    const notes=ov.notes||[];
+    const ibd=ov.ibd||null;
+    const lastNote=notes.length?notes[notes.length-1].text:'';
+    const cp=s.price_chg_pct||0;
+    const eq=s.eps_growth_qtr||0;
+    const rq=s.revenue_growth_qtr||0;
+    const rp=Math.min(100,Math.max(0,s.rs_proprietary||0));
+    let dots='';for(let i=1;i<=5;i++)dots+='<div class="adot '+(i<=(s.accum_score||0)?'on':'off')+'"></div>';
+    const mc=s.mktcap_b>=1000?(s.mktcap_b/1000).toFixed(1)+'T':s.mktcap_b+'B';
+    return'<tr class="'+(s.new_today?'new-row':'')+'" onclick="openD(\''+s.ticker+'\')">'+
       '<td><div class="t-sym"><span class="sym">'+s.ticker+'</span>'+(s.new_today?'<span class="new-badge">NEW</span>':'')+'</div></td>'+
       '<td style="color:var(--text);font-weight:600">$'+(s.price||0).toFixed(2)+'</td>'+
       '<td class="'+(cp>=0?'pos':'neg')+'">'+(cp>=0?'+':'')+cp.toFixed(2)+'%</td>'+
@@ -462,19 +435,17 @@ function renderTable(){
   }).join('');
 }
 
-// ── Summary ──
 function updateSummary(rem){
-  document.getElementById('sTotal').textContent = all.length;
-  document.getElementById('sNew').textContent = all.filter(s=>s.new_today).length;
-  if(rem!==undefined) document.getElementById('sRem').textContent = rem;
-  document.getElementById('sPass').textContent = all.filter(s=>(OV[s.ticker]?.status||'WATCH')==='PASS').length;
-  document.getElementById('sWatch').textContent = all.filter(s=>(OV[s.ticker]?.status||'WATCH')==='WATCH').length;
+  document.getElementById('sTotal').textContent=all.length;
+  document.getElementById('sNew').textContent=all.filter(s=>s.new_today).length;
+  if(rem!==undefined)document.getElementById('sRem').textContent=rem;
+  document.getElementById('sPass').textContent=all.filter(s=>(OV[s.ticker]?.status||'WATCH')==='PASS').length;
+  document.getElementById('sWatch').textContent=all.filter(s=>(OV[s.ticker]?.status||'WATCH')==='WATCH').length;
 }
 
-// ── Market direction ──
 function renderMkt(m){
-  if(!m) return;
-  const cls = d => d&&d.includes('Uptrend')?'up':d&&d.includes('Pressure')?'warn':'dn';
+  if(!m)return;
+  const cls=d=>d&&d.includes('Uptrend')?'up':d&&d.includes('Pressure')?'warn':'dn';
   document.getElementById('mSpx').className='mkt-v '+cls(m.spx_direction);
   document.getElementById('mSpx').textContent=m.spx_direction||'—';
   document.getElementById('mSpxD').textContent=' · '+(m.spx_dist_days||0)+' dist';
@@ -485,106 +456,71 @@ function renderMkt(m){
   document.getElementById('tNdx').className='market-pill '+cls(m.ndx_direction);
 }
 
-// ── Drawer ──
 function openD(ticker){
-  const s = all.find(x=>x.ticker===ticker);
-  if(!s) return;
-  cur = ticker;
-  const ov = OV[ticker]||{};
-  document.getElementById('dTick').textContent = ticker;
-  document.getElementById('dMeta').textContent = (s.industry||'--')+' · '+(s.theme||'--')+' · Added '+(s.date_added||'--');
-  document.getElementById('dMetrics').innerHTML = [
-    ['Price','$'+(s.price||0).toFixed(2)],
-    ['Day Chg',((s.price_chg_pct||0)>=0?'+':'')+(s.price_chg_pct||0).toFixed(2)+'%'],
-    ['Mkt Cap','$'+(s.mktcap_b||0)+'B'],
-    ['Volume',fv(s.volume)],
-    ['Avg Vol 20D',fv(s.avg_vol_20d)],
-    ['Stage 2',s.stage2?'✓ Confirmed':'✗ Not yet'],
-    ['52W High Dist','-'+(s.distance_from_52w_high_pct||0).toFixed(1)+'%'],
-    ['Yield',(s.yield||0).toFixed(2)+'%']
+  const s=all.find(x=>x.ticker===ticker);if(!s)return;
+  cur=ticker;const ov=OV[ticker]||{};
+  document.getElementById('dTick').textContent=ticker;
+  document.getElementById('dMeta').textContent=(s.industry||'--')+' · '+(s.theme||'--')+' · Added '+(s.date_added||'--');
+  document.getElementById('dMetrics').innerHTML=[
+    ['Price','$'+(s.price||0).toFixed(2)],['Day Chg',((s.price_chg_pct||0)>=0?'+':'')+(s.price_chg_pct||0).toFixed(2)+'%'],
+    ['Mkt Cap','$'+(s.mktcap_b||0)+'B'],['Volume',fv(s.volume)],
+    ['Avg Vol 20D',fv(s.avg_vol_20d)],['Stage 2',s.stage2?'✓ Confirmed':'✗ Not yet'],
+    ['52W High Dist','-'+(s.distance_from_52w_high_pct||0).toFixed(1)+'%'],['Yield',(s.yield||0).toFixed(2)+'%']
   ].map(p=>'<div class="kv"><div class="kv-l">'+p[0]+'</div><div class="kv-v">'+p[1]+'</div></div>').join('');
-  document.getElementById('dFund').innerHTML = [
-    ['EPS Gr Qtr YoY',fmtN(s.eps_growth_qtr)+'%'],
-    ['EPS Gr Annual',fmtN(s.eps_growth_annual)+'%'],
-    ['Rev Gr Qtr YoY',fmtN(s.revenue_growth_qtr)+'%'],
-    ['Rev Gr Annual',fmtN(s.revenue_growth_annual)+'%'],
-    ['ROE',((s.roe||0)*100).toFixed(1)+'%'],
-    ['D/E',(s.de_ratio||0).toFixed(2)],
-    ['Moat',s.moat||'--'],
-    ['Accum Score',(s.accum_score||0)+'/5']
+  document.getElementById('dFund').innerHTML=[
+    ['EPS Gr Qtr YoY',fmtN(s.eps_growth_qtr)+'%'],['EPS Gr Annual',fmtN(s.eps_growth_annual)+'%'],
+    ['Rev Gr Qtr YoY',fmtN(s.revenue_growth_qtr)+'%'],['Rev Gr Annual',fmtN(s.revenue_growth_annual)+'%'],
+    ['ROE',((s.roe||0)*100).toFixed(1)+'%'],['D/E',(s.de_ratio||0).toFixed(2)],
+    ['Moat',s.moat||'--'],['Accum Score',(s.accum_score||0)+'/5']
   ].map(p=>'<div class="kv"><div class="kv-l">'+p[0]+'</div><div class="kv-v">'+p[1]+'</div></div>').join('');
-  const ibd = ov.ibd||null;
-  document.getElementById('dRS').innerHTML =
+  const ibd=ov.ibd||null;
+  document.getElementById('dRS').innerHTML=
     '<div class="rs-row"><span class="rs-src">Proprietary</span><div class="rs-bl"><div class="rs-bf p" style="width:'+(s.rs_proprietary||0)+'%"></div></div><span class="rs-n">'+(s.rs_proprietary||'--')+'</span></div>'+
     '<div class="rs-row"><span class="rs-src">TradingView</span><div class="rs-bl"><div class="rs-bf t" style="width:'+(s.rs_tradingview||0)+'%"></div></div><span class="rs-n">'+(s.rs_tradingview||'--')+'</span></div>'+
     '<div class="rs-row"><span class="rs-src">IBD Official</span><div class="rs-bl"><div class="rs-bf i" style="width:'+(ibd||0)+'%"></div></div><span class="rs-n">'+(ibd||'--')+'</span></div>';
-  document.getElementById('ibdPend').textContent = ibd?'':'IBD not yet entered — add below';
-  document.getElementById('ibdIn').value = ibd||'';
+  document.getElementById('ibdPend').textContent=ibd?'':'IBD not yet entered — add below';
+  document.getElementById('ibdIn').value=ibd||'';
   document.querySelectorAll('.s-btn').forEach(b=>b.classList.toggle('active',b.dataset.s===(ov.status||'WATCH')));
   renderNotes(ov.notes||[]);
-  document.getElementById('noteIn').value = '';
+  document.getElementById('noteIn').value='';
   document.getElementById('ov').classList.add('open');
   document.getElementById('dr').classList.add('open');
 }
 
 function renderNotes(notes){
-  const el = document.getElementById('dNotes');
-  if(!notes.length){ el.innerHTML='<span class="no-notes">No notes yet.</span>'; return; }
-  el.innerHTML = notes.slice().reverse().map(n=>
-    '<div class="note-e"><span class="note-d">'+n.date+'</span><span class="note-t">'+esc(n.text)+'</span></div>'
-  ).join('');
+  const el=document.getElementById('dNotes');
+  if(!notes.length){el.innerHTML='<span class="no-notes">No notes yet.</span>';return;}
+  el.innerHTML=notes.slice().reverse().map(n=>'<div class="note-e"><span class="note-d">'+n.date+'</span><span class="note-t">'+esc(n.text)+'</span></div>').join('');
 }
-
-function closeD(){
-  document.getElementById('ov').classList.remove('open');
-  document.getElementById('dr').classList.remove('open');
-  cur = null;
-}
-
-async function setStatus(st){
-  if(!cur) return;
-  if(!OV[cur]) OV[cur]={};
-  OV[cur].status = st;
-  lsSet(SK.ov, OV);
+function closeD(){document.getElementById('ov').classList.remove('open');document.getElementById('dr').classList.remove('open');cur=null;}
+function setStatus(st){
+  if(!cur)return;
+  if(!OV[cur])OV[cur]={};
+  OV[cur].status=st;
+  lsSet(SK.ov,OV);
   document.querySelectorAll('.s-btn').forEach(b=>b.classList.toggle('active',b.dataset.s===st));
-  updateSummary(); applyFilters();
-  toast(cur+' set to '+st,'ok');
+  updateSummary();applyFilters();toast(cur+' set to '+st,'ok');
 }
-
-async function addNote(){
-  if(!cur) return;
-  const txt = document.getElementById('noteIn').value.trim();
-  if(!txt) return;
-  if(!OV[cur]) OV[cur]={};
-  if(!OV[cur].notes) OV[cur].notes=[];
-  OV[cur].notes.push({
-    date: new Date().toLocaleString('en-AU',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}),
-    text: txt
-  });
-  lsSet(SK.ov, OV);
-  renderNotes(OV[cur].notes);
-  document.getElementById('noteIn').value = '';
-  applyFilters();
-  toast('Note saved','ok');
+function addNote(){
+  if(!cur)return;
+  const txt=document.getElementById('noteIn').value.trim();if(!txt)return;
+  if(!OV[cur])OV[cur]={};if(!OV[cur].notes)OV[cur].notes=[];
+  OV[cur].notes.push({date:new Date().toLocaleString('en-AU',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}),text:txt});
+  lsSet(SK.ov,OV);renderNotes(OV[cur].notes);document.getElementById('noteIn').value='';
+  applyFilters();toast('Note saved','ok');
 }
-
-async function saveIBD(){
-  if(!cur) return;
-  const v = parseInt(document.getElementById('ibdIn').value);
-  if(isNaN(v)||v<1||v>99){ toast('IBD RS must be 1-99','err'); return; }
-  if(!OV[cur]) OV[cur]={};
-  OV[cur].ibd = v;
-  lsSet(SK.ov, OV);
-  openD(cur);
-  toast('IBD RS saved: '+v,'ok');
+function saveIBD(){
+  if(!cur)return;
+  const v=parseInt(document.getElementById('ibdIn').value);
+  if(isNaN(v)||v<1||v>99){toast('IBD RS must be 1-99','err');return;}
+  if(!OV[cur])OV[cur]={};OV[cur].ibd=v;lsSet(SK.ov,OV);
+  openD(cur);toast('IBD RS saved: '+v,'ok');
 }
-
-function fv(v){ if(!v)return'--'; if(v>=1e6)return(v/1e6).toFixed(1)+'M'; if(v>=1e3)return(v/1e3).toFixed(0)+'K'; return v; }
-function fmtN(v){ return v!=null?(v>=0?'+':'')+Number(v).toFixed(1):'--'; }
-function esc(s){ return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function toast(msg,type){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'+(type?' '+type:''); setTimeout(()=>{t.className='toast';},3000); }
-
-document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeD(); });
+function fv(v){if(!v)return'--';if(v>=1e6)return(v/1e6).toFixed(1)+'M';if(v>=1e3)return(v/1e3).toFixed(0)+'K';return v;}
+function fmtN(v){return v!=null?(v>=0?'+':'')+Number(v).toFixed(1):'--';}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function toast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');setTimeout(()=>{t.className='toast';},3000);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
 init();
 </script>
 </body>
