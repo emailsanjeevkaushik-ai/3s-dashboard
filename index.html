@@ -144,6 +144,86 @@ textarea.note-in:focus{border-color:var(--accent);}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.ok{border-color:var(--green-dim);color:var(--green);}
 .toast.err{border-color:var(--red-dim);color:var(--red);}
+/* ── Automation ── */
+.auto-btn{display:flex;align-items:center;gap:6px;background:#7c3aed;color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;transition:opacity .15s;}
+.auto-btn:hover{opacity:.85;}
+.auto-btn.live{background:var(--purple);}
+/* Automation modal */
+.am-ov{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:400;opacity:0;pointer-events:none;transition:opacity .2s;}
+.am-ov.open{opacity:1;pointer-events:all;}
+.am-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-60%);width:620px;max-width:96vw;max-height:90vh;background:var(--surface);border:1px solid var(--border2);border-radius:8px;z-index:401;opacity:0;pointer-events:none;transition:all .22s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.am-modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%);}
+.am-hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.am-title{font-size:13px;font-weight:800;letter-spacing:.1em;color:var(--purple);}
+.am-tabs{display:flex;gap:2px;padding:0 20px;background:var(--surface2);border-bottom:1px solid var(--border);flex-shrink:0;}
+.am-tab{font-family:var(--mono);font-size:10px;font-weight:600;padding:9px 14px;border:none;background:transparent;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .12s;}
+.am-tab:hover{color:var(--text2);}
+.am-tab.active{color:var(--purple);border-bottom-color:var(--purple);}
+.am-body{flex:1;overflow-y:auto;padding:18px 20px;}
+.am-body::-webkit-scrollbar{width:3px;}
+.am-body::-webkit-scrollbar-thumb{background:var(--border2);}
+/* Setup tab */
+.am-field{margin-bottom:12px;}
+.am-field label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:5px;}
+.am-field input,.am-field select,.am-field textarea{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;border-radius:4px;outline:none;transition:border-color .15s;}
+.am-field input:focus,.am-field select:focus,.am-field textarea:focus{border-color:var(--purple);}
+.am-field select option{background:var(--surface);}
+.am-row{display:flex;gap:8px;}
+.am-row .am-field{flex:1;}
+.am-btn{font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.06em;padding:8px 16px;border-radius:4px;border:none;cursor:pointer;transition:opacity .15s;}
+.am-btn:hover{opacity:.85;}
+.am-btn.primary{background:var(--purple);color:#fff;}
+.am-btn.secondary{background:var(--surface2);color:var(--text2);border:1px solid var(--border2);}
+.am-btn.danger{background:transparent;color:var(--red);border:1px solid var(--red-dim);}
+.am-btn.green{background:#16a34a;color:#fff;}
+.am-status{font-family:var(--mono);font-size:10px;margin-top:8px;min-height:14px;}
+.am-status.ok{color:var(--green);}
+.am-status.err{color:var(--red);}
+.am-status.warn{color:var(--amber);}
+/* Instructions */
+.instr-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
+.instr-card{background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;}
+.instr-card.executed{border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.03);}
+.instr-card.failed{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.03);}
+.instr-card.paused{opacity:.55;}
+.instr-card.token_expired{border-color:rgba(245,158,11,.3);}
+.instr-card.partial{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.04);}
+.instr-type-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.instr-type-dot.scheduled_order{background:var(--accent);}
+.instr-type-dot.futures_rollover{background:var(--cyan);}
+.instr-type-dot.price_trigger{background:var(--amber);}
+.instr-info{flex:1;min-width:0;}
+.instr-label{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.instr-meta{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.instr-err{font-family:var(--mono);font-size:9px;color:var(--amber);margin-top:3px;}
+.instr-status{font-size:9px;font-weight:700;padding:2px 6px;border-radius:2px;border:1px solid;display:inline-block;}
+.instr-status.active{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:var(--accent);}
+.instr-status.paused{background:transparent;border-color:var(--border2);color:var(--text3);}
+.instr-status.executed{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);color:var(--green);}
+.instr-status.failed{background:rgba(239,68,68,.06);border-color:rgba(239,68,68,.2);color:var(--red);}
+.instr-status.token_expired{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--amber);}
+.instr-status.partial{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--amber);}
+.instr-actions{display:flex;flex-direction:column;gap:4px;flex-shrink:0;}
+.instr-act-btn{font-family:var(--mono);font-size:9px;font-weight:600;padding:3px 8px;border-radius:2px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;transition:all .1s;white-space:nowrap;}
+.instr-act-btn:hover{border-color:var(--text2);color:var(--text);}
+.instr-act-btn.del:hover{border-color:var(--red-dim);color:var(--red);}
+/* Create instruction form */
+.create-form{background:var(--surface2);border:1px solid var(--border2);border-radius:6px;padding:16px;}
+.cf-type-row{display:flex;gap:6px;margin-bottom:14px;}
+.cf-type-btn{flex:1;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.08em;padding:8px 4px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;text-align:center;transition:all .12s;}
+.cf-type-btn:hover{border-color:var(--purple);color:var(--purple);}
+.cf-type-btn.active{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.1);}
+.cf-section{display:none;}
+.cf-section.show{display:block;}
+/* History */
+.hist-entry{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;}
+.hist-entry:last-child{border-bottom:none;}
+.hist-ico{font-size:14px;flex-shrink:0;margin-top:1px;}
+.hist-info{flex:1;min-width:0;}
+.hist-label{color:var(--text);font-size:11px;}
+.hist-detail{font-size:9px;color:var(--text3);margin-top:2px;word-break:break-all;}
+.hist-time{font-size:9px;color:var(--text3);flex-shrink:0;}
+.empty-hint{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;padding:30px 0;font-style:italic;}
 /* ── Kite Connect ── */
 .kite-btn{display:flex;align-items:center;gap:6px;background:#16a34a;color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;transition:opacity .15s;}
 .kite-btn:hover{opacity:.85;}
@@ -208,6 +288,9 @@ textarea.note-in:focus{border-color:var(--accent);}
     <div class="btn-group">
       <button class="demo-btn" onclick="loadDemo()">
         &#9654; DEMO MODE
+      </button>
+      <button class="auto-btn" id="autoBtn" onclick="openAutoModal()">
+        &#9881; AUTOMATE
       </button>
       <button class="kite-btn" id="kiteBtn" onclick="openKiteModal()">
         <span class="kite-dot" id="kiteDot"></span> KITE
@@ -334,6 +417,261 @@ textarea.note-in:focus{border-color:var(--accent);}
 </div>
 <div class="toast" id="toast"></div>
 
+<!-- Automation Modal -->
+<div class="am-ov" id="amOv" onclick="closeAutoModal()"></div>
+<div class="am-modal" id="amModal">
+  <div class="am-hdr">
+    <div class="am-title">&#9881; AUTONOMOUS ORDER EXECUTION</div>
+    <button class="dclose" onclick="closeAutoModal()">&#215;</button>
+  </div>
+  <div class="am-tabs">
+    <button class="am-tab active" id="amTabInstr"   onclick="switchAmTab('instr')">Instructions</button>
+    <button class="am-tab"        id="amTabCreate"  onclick="switchAmTab('create')">+ Create</button>
+    <button class="am-tab"        id="amTabHistory" onclick="switchAmTab('history')">History</button>
+    <button class="am-tab"        id="amTabSetup"   onclick="switchAmTab('setup')">Setup</button>
+  </div>
+
+  <!-- Instructions list -->
+  <div class="am-body" id="amBodyInstr">
+    <div class="instr-list" id="instrList"></div>
+    <div id="instrEmpty" class="empty-hint">No active instructions. Click <b>+ Create</b> to add one.</div>
+  </div>
+
+  <!-- Create instruction -->
+  <div class="am-body" id="amBodyCreate" style="display:none">
+    <div class="create-form">
+      <div class="am-field">
+        <label>Instruction label</label>
+        <input type="text" id="cfLabel" placeholder="e.g. NIFTY June Rollover">
+      </div>
+      <div class="cf-type-row">
+        <button class="cf-type-btn active" id="cfTypeRollover" onclick="setCfType('futures_rollover')">FUTURES<br>ROLLOVER</button>
+        <button class="cf-type-btn"        id="cfTypeScheduled" onclick="setCfType('scheduled_order')">SCHEDULED<br>ORDER</button>
+        <button class="cf-type-btn"        id="cfTypeTrigger"   onclick="setCfType('price_trigger')">PRICE<br>TRIGGER</button>
+      </div>
+
+      <!-- Futures Rollover -->
+      <div class="cf-section show" id="cfRollover">
+        <div class="am-row">
+          <div class="am-field">
+            <label>Direction</label>
+            <select id="cfDir"><option value="LONG">LONG (holding BUY)</option><option value="SHORT">SHORT (holding SELL)</option></select>
+          </div>
+          <div class="am-field">
+            <label>Exchange</label>
+            <select id="cfExch"><option>NFO</option><option>BFO</option><option>MCX</option><option>CDS</option></select>
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Current symbol (exit)</label>
+            <input type="text" id="cfCurSym" placeholder="e.g. NIFTY24JUNFUT">
+          </div>
+          <div class="am-field">
+            <label>Next symbol (entry)</label>
+            <input type="text" id="cfNxtSym" placeholder="e.g. NIFTY24JULFUT">
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Quantity (lots)</label>
+            <input type="number" id="cfRollQty" min="1" placeholder="50">
+          </div>
+          <div class="am-field">
+            <label>Product</label>
+            <select id="cfRollProd"><option value="NRML">NRML (carry forward)</option><option value="MIS">MIS (intraday)</option></select>
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Execute date (IST)</label>
+            <input type="date" id="cfRollDate">
+          </div>
+          <div class="am-field">
+            <label>Execute time (IST, 24h)</label>
+            <input type="time" id="cfRollTime" value="15:15">
+          </div>
+        </div>
+      </div>
+
+      <!-- Scheduled Order -->
+      <div class="cf-section" id="cfScheduled">
+        <div class="am-row">
+          <div class="am-field">
+            <label>Symbol</label>
+            <input type="text" id="cfScSym" placeholder="e.g. RELIANCE">
+          </div>
+          <div class="am-field">
+            <label>Exchange</label>
+            <select id="cfScExch"><option>NSE</option><option>BSE</option><option>NFO</option><option>MCX</option><option>CDS</option></select>
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Side</label>
+            <select id="cfScSide"><option value="BUY">BUY</option><option value="SELL">SELL</option></select>
+          </div>
+          <div class="am-field">
+            <label>Product</label>
+            <select id="cfScProd"><option value="CNC">CNC (delivery)</option><option value="MIS">MIS (intraday)</option><option value="NRML">NRML (F&amp;O)</option></select>
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Order type</label>
+            <select id="cfScOrdType" onchange="toggleScPrice()">
+              <option value="MARKET">MARKET</option><option value="LIMIT">LIMIT</option>
+              <option value="SL">SL (stop-loss limit)</option><option value="SL-M">SL-M</option>
+            </select>
+          </div>
+          <div class="am-field">
+            <label>Quantity</label>
+            <input type="number" id="cfScQty" min="1" placeholder="10">
+          </div>
+        </div>
+        <div class="am-row" id="cfScPriceRow" style="display:none">
+          <div class="am-field">
+            <label>Price</label>
+            <input type="number" id="cfScPrice" step="0.05" placeholder="0.00">
+          </div>
+          <div class="am-field" id="cfScTriggerField">
+            <label>Trigger price</label>
+            <input type="number" id="cfScTrigger" step="0.05" placeholder="0.00">
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Execute date (IST)</label>
+            <input type="date" id="cfScDate">
+          </div>
+          <div class="am-field">
+            <label>Execute time (IST, 24h)</label>
+            <input type="time" id="cfScTime" value="09:15">
+          </div>
+        </div>
+        <div class="am-field">
+          <label>Variety</label>
+          <select id="cfScVariety"><option value="regular">Regular (market hours)</option><option value="amo">AMO (after market)</option></select>
+        </div>
+      </div>
+
+      <!-- Price Trigger -->
+      <div class="cf-section" id="cfTrigger">
+        <div class="am-row">
+          <div class="am-field">
+            <label>Symbol</label>
+            <input type="text" id="cfTrSym" placeholder="e.g. NIFTY24JUNFUT">
+          </div>
+          <div class="am-field">
+            <label>Exchange</label>
+            <select id="cfTrExch"><option>NSE</option><option>BSE</option><option>NFO</option><option>MCX</option></select>
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Condition</label>
+            <select id="cfTrCond">
+              <option value="gte">Price &gt;= trigger (buy breakout)</option>
+              <option value="lte">Price &lt;= trigger (sell breakdown)</option>
+              <option value="crosses_above">Crosses above trigger</option>
+              <option value="crosses_below">Crosses below trigger</option>
+            </select>
+          </div>
+          <div class="am-field">
+            <label>Trigger price (₹)</label>
+            <input type="number" id="cfTrPrice" step="0.05" placeholder="0.00">
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Order side</label>
+            <select id="cfTrSide"><option value="BUY">BUY</option><option value="SELL">SELL</option></select>
+          </div>
+          <div class="am-field">
+            <label>Product</label>
+            <select id="cfTrProd"><option value="CNC">CNC</option><option value="MIS">MIS</option><option value="NRML">NRML</option></select>
+          </div>
+        </div>
+        <div class="am-row">
+          <div class="am-field">
+            <label>Order type</label>
+            <select id="cfTrOrdType"><option value="MARKET">MARKET</option><option value="LIMIT">LIMIT</option></select>
+          </div>
+          <div class="am-field">
+            <label>Quantity</label>
+            <input type="number" id="cfTrQty" min="1" placeholder="10">
+          </div>
+        </div>
+        <div class="am-field">
+          <label>Max retries before giving up</label>
+          <select id="cfTrRetries"><option value="3">3 (default)</option><option value="5">5</option><option value="1">1</option></select>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:14px">
+        <button class="am-btn primary" onclick="createInstruction()">CREATE INSTRUCTION</button>
+        <button class="am-btn secondary" onclick="switchAmTab('instr')">CANCEL</button>
+      </div>
+      <div class="am-status" id="cfStatus"></div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="am-body" id="amBodyHistory" style="display:none">
+    <div id="histList"></div>
+    <div id="histEmpty" class="empty-hint">No execution history yet.</div>
+  </div>
+
+  <!-- Setup -->
+  <div class="am-body" id="amBodySetup" style="display:none">
+    <div style="margin-bottom:18px">
+      <div class="dsec-title" style="margin-bottom:10px">Worker Setup</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:14px">
+        1. Deploy the <code>worker/</code> directory to Cloudflare Workers (see README)<br>
+        2. Create a KV namespace: <code>wrangler kv:namespace create KITE_DATA</code><br>
+        3. Paste the KV id into <code>wrangler.toml</code> then run <code>npm run deploy</code><br>
+        4. Enter your deployed worker URL below and set a password
+      </div>
+      <div class="am-field">
+        <label>Worker URL</label>
+        <input type="url" id="amWorkerUrl" placeholder="https://3s-kite-executor.YOUR_ACCOUNT.workers.dev">
+      </div>
+      <div class="am-field">
+        <label>Dashboard password (protects the worker API)</label>
+        <input type="password" id="amPassword" placeholder="Set a strong password">
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="am-btn primary" onclick="saveWorkerSetup()">SAVE &amp; INITIALIZE</button>
+        <button class="am-btn secondary" onclick="testWorker()">TEST CONNECTION</button>
+      </div>
+      <div class="am-status" id="amSetupStatus"></div>
+    </div>
+
+    <div style="margin-bottom:18px">
+      <div class="dsec-title" style="margin-bottom:10px">Telegram Notifications</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:14px">
+        1. Message <code>@BotFather</code> on Telegram → <code>/newbot</code> → copy the Bot Token<br>
+        2. Message your bot once, then visit:<br>
+        &nbsp;&nbsp;<code>https://api.telegram.org/bot&lt;TOKEN&gt;/getUpdates</code><br>
+        3. Copy your <code>chat_id</code> from the response
+      </div>
+      <div class="am-field">
+        <label>Telegram bot token</label>
+        <input type="text" id="amTgToken" placeholder="123456789:AAABBB...">
+      </div>
+      <div class="am-field">
+        <label>Chat ID</label>
+        <input type="text" id="amTgChat" placeholder="-100123456789 or 123456789">
+      </div>
+      <div style="display:flex;gap:8px">
+        <button class="am-btn primary" onclick="saveNotifyConfig()">SAVE NOTIFICATIONS</button>
+        <button class="am-btn secondary" onclick="testNotify()">SEND TEST MESSAGE</button>
+      </div>
+      <div class="am-status" id="amNotifyStatus"></div>
+    </div>
+  </div>
+</div>
+
 <!-- Kite Connect Modal -->
 <div class="km-ov" id="kmOv" onclick="closeKiteModal()"></div>
 <div class="km-modal" id="kmModal">
@@ -421,6 +759,7 @@ function init(){
   const mkt = lsGet(SK.mkt);
   if(mkt) renderMkt(mkt);
   initKite();
+  initAuto();
 }
 
 async function runScreener(){
@@ -660,6 +999,305 @@ function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 function toast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');setTimeout(()=>{t.className='toast';},3000);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeD();closeKiteModal();}});
 
+// ── AUTOMATION ──
+const SK_AUTO = 'a_cfg'; // {workerUrl, authToken}
+let autoWorkerUrl = '';
+let autoAuthToken = '';
+let cfType = 'futures_rollover';
+
+function initAuto() {
+  const cfg = lsGet(SK_AUTO) || {};
+  autoWorkerUrl = cfg.workerUrl || '';
+  autoAuthToken = cfg.authToken || '';
+  if (autoWorkerUrl) document.getElementById('autoBtn').classList.add('live');
+}
+
+function openAutoModal() {
+  const cfg = lsGet(SK_AUTO) || {};
+  document.getElementById('amWorkerUrl').value = cfg.workerUrl || '';
+  document.getElementById('amPassword').value  = cfg.authToken || '';
+  switchAmTab('instr');
+  document.getElementById('amOv').classList.add('open');
+  document.getElementById('amModal').classList.add('open');
+  if (autoWorkerUrl) loadInstructions();
+}
+
+function closeAutoModal() {
+  document.getElementById('amOv').classList.remove('open');
+  document.getElementById('amModal').classList.remove('open');
+}
+
+function switchAmTab(tab) {
+  ['instr','create','history','setup'].forEach(t => {
+    document.getElementById('amTab' + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle('active', t === tab);
+    document.getElementById('amBody' + t.charAt(0).toUpperCase() + t.slice(1)).style.display = t === tab ? 'block' : 'none';
+  });
+  if (tab === 'instr')   loadInstructions();
+  if (tab === 'history') loadHistory();
+  if (tab === 'setup')   loadNotifyConfig();
+}
+
+// Worker API helper
+async function workerFetch(path, options = {}) {
+  if (!autoWorkerUrl) throw new Error('Worker URL not configured. Go to Setup tab.');
+  const resp = await fetch(autoWorkerUrl + path, {
+    ...options,
+    headers: { 'Content-Type': 'application/json', 'X-Auth-Token': autoAuthToken, ...(options.headers || {}) }
+  });
+  if (resp.status === 401) throw new Error('Unauthorized — check your password in Setup');
+  return resp.json();
+}
+
+// ── Setup ──
+async function saveWorkerSetup() {
+  const url = document.getElementById('amWorkerUrl').value.trim().replace(/\/$/, '');
+  const pw  = document.getElementById('amPassword').value.trim();
+  if (!url || !pw) { setAmStatus('amSetupStatus', 'err', 'Both fields required'); return; }
+  setAmStatus('amSetupStatus', '', 'Initializing worker…');
+
+  // First: call /setup to register password (only works if not already set up)
+  try {
+    const resp = await fetch(url + '/setup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    });
+    const data = await resp.json();
+    if (!data.ok && !data.error?.includes('Already set up')) {
+      setAmStatus('amSetupStatus', 'err', data.error || 'Setup failed'); return;
+    }
+  } catch (e) {
+    setAmStatus('amSetupStatus', 'err', 'Cannot reach worker: ' + e.message); return;
+  }
+
+  lsSet(SK_AUTO, { workerUrl: url, authToken: pw });
+  autoWorkerUrl = url; autoAuthToken = pw;
+  document.getElementById('autoBtn').classList.add('live');
+  setAmStatus('amSetupStatus', 'ok', '✓ Worker connected and password saved');
+
+  // Also push Kite creds to worker if we have them
+  const kCreds = lsGet(SK_KITE);
+  if (kCreds?.apiKey && kCreds?.accessToken) {
+    await workerFetch('/auth/kite', { method: 'POST', body: JSON.stringify({ apiKey: kCreds.apiKey, accessToken: kCreds.accessToken }) }).catch(() => {});
+  }
+}
+
+async function testWorker() {
+  setAmStatus('amSetupStatus', '', 'Testing…');
+  try {
+    const url = document.getElementById('amWorkerUrl').value.trim().replace(/\/$/, '');
+    const data = await fetch(url + '/').then(r => r.json());
+    setAmStatus('amSetupStatus', 'ok', `✓ Worker reachable · setup=${data.setup} · kite=${data.kite_configured}`);
+  } catch (e) {
+    setAmStatus('amSetupStatus', 'err', 'Cannot reach worker: ' + e.message);
+  }
+}
+
+async function saveNotifyConfig() {
+  const token  = document.getElementById('amTgToken').value.trim();
+  const chatId = document.getElementById('amTgChat').value.trim();
+  if (!token || !chatId) { setAmStatus('amNotifyStatus', 'err', 'Both fields required'); return; }
+  try {
+    await workerFetch('/config/notify', { method: 'POST', body: JSON.stringify({ telegramBotToken: token, telegramChatId: chatId }) });
+    setAmStatus('amNotifyStatus', 'ok', '✓ Telegram notifications saved');
+  } catch (e) { setAmStatus('amNotifyStatus', 'err', e.message); }
+}
+
+async function testNotify() {
+  setAmStatus('amNotifyStatus', '', 'Sending test message…');
+  try {
+    const cfg = await workerFetch('/config/notify');
+    if (!cfg.telegramBotToken) { setAmStatus('amNotifyStatus', 'err', 'Save Telegram config first'); return; }
+    const resp = await fetch(`https://api.telegram.org/bot${cfg.telegramBotToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: cfg.telegramChatId, text: '✅ <b>3S Dashboard</b>: Telegram notifications are working!', parse_mode: 'HTML' })
+    });
+    const d = await resp.json();
+    if (d.ok) setAmStatus('amNotifyStatus', 'ok', '✓ Test message sent to Telegram');
+    else setAmStatus('amNotifyStatus', 'err', d.description || 'Telegram error');
+  } catch (e) { setAmStatus('amNotifyStatus', 'err', e.message); }
+}
+
+async function loadNotifyConfig() {
+  if (!autoWorkerUrl) return;
+  try {
+    const cfg = await workerFetch('/config/notify');
+    if (cfg.telegramBotToken) document.getElementById('amTgToken').value = cfg.telegramBotToken;
+    if (cfg.telegramChatId)  document.getElementById('amTgChat').value  = cfg.telegramChatId;
+  } catch {}
+}
+
+// ── Instructions ──
+async function loadInstructions() {
+  const list = document.getElementById('instrList');
+  const empty = document.getElementById('instrEmpty');
+  if (!autoWorkerUrl) { empty.style.display = 'block'; empty.textContent = 'Configure Worker URL in Setup first.'; list.innerHTML = ''; return; }
+  list.innerHTML = '<div style="font-family:var(--mono);font-size:10px;color:var(--text3);padding:10px 0">Loading…</div>';
+  empty.style.display = 'none';
+  try {
+    const items = await workerFetch('/instructions');
+    list.innerHTML = '';
+    if (!items.length) { empty.style.display = 'block'; empty.textContent = 'No instructions. Click + Create to add one.'; return; }
+    items.forEach(instr => list.appendChild(renderInstrCard(instr)));
+  } catch (e) {
+    list.innerHTML = '';
+    empty.style.display = 'block';
+    empty.textContent = 'Error: ' + e.message;
+  }
+}
+
+function renderInstrCard(instr) {
+  const el = document.createElement('div');
+  el.className = 'instr-card ' + instr.status;
+  el.id = 'instr-' + instr.id;
+
+  const metaLines = {
+    futures_rollover: `${instr.direction} · ${instr.current_symbol} → ${instr.next_symbol} · ${instr.quantity} qty · ${instr.execute_date} ${instr.execute_time} IST`,
+    scheduled_order:  `${instr.transaction_type} ${instr.quantity} ${instr.tradingsymbol} [${instr.exchange}] · ${instr.order_type} · ${instr.execute_date} ${instr.execute_time} IST`,
+    price_trigger:    `${instr.tradingsymbol} [${instr.exchange}] · ${instr.condition?.replace(/_/g,' ')} ₹${instr.trigger_price} → ${instr.transaction_type} ${instr.quantity}`
+  };
+
+  el.innerHTML =
+    `<div class="instr-type-dot ${instr.type}"></div>` +
+    `<div class="instr-info">` +
+      `<div class="instr-label">${esc(instr.label)}</div>` +
+      `<div class="instr-meta">${esc(metaLines[instr.type] || instr.type)}</div>` +
+      `<span class="instr-status ${instr.status}">${instr.status.replace(/_/g,' ').toUpperCase()}</span>` +
+      (instr.last_error ? `<div class="instr-err">⚠ ${esc(instr.last_error)}</div>` : '') +
+    `</div>` +
+    `<div class="instr-actions">` +
+      (instr.status === 'active' ? `<button class="instr-act-btn" onclick="pauseInstr('${instr.id}')">PAUSE</button>` : '') +
+      (instr.status === 'paused' ? `<button class="instr-act-btn" onclick="resumeInstr('${instr.id}')">RESUME</button>` : '') +
+      `<button class="instr-act-btn del" onclick="deleteInstr('${instr.id}')">DELETE</button>` +
+    `</div>`;
+  return el;
+}
+
+async function pauseInstr(id) {
+  await workerFetch(`/instructions/${id}/pause`, { method: 'POST' });
+  loadInstructions();
+}
+async function resumeInstr(id) {
+  await workerFetch(`/instructions/${id}/resume`, { method: 'POST' });
+  loadInstructions();
+}
+async function deleteInstr(id) {
+  if (!confirm('Delete this instruction?')) return;
+  await workerFetch(`/instructions/${id}`, { method: 'DELETE' });
+  loadInstructions();
+}
+
+// ── Create instruction ──
+function setCfType(type) {
+  cfType = type;
+  ['futures_rollover','scheduled_order','price_trigger'].forEach(t => {
+    document.getElementById('cfType' + ({futures_rollover:'Rollover',scheduled_order:'Scheduled',price_trigger:'Trigger'}[t])).classList.toggle('active', t === type);
+    document.getElementById('cf' + ({futures_rollover:'Rollover',scheduled_order:'Scheduled',price_trigger:'Trigger'}[t])).classList.toggle('show', t === type);
+  });
+}
+
+function toggleScPrice() {
+  const ot = document.getElementById('cfScOrdType').value;
+  const show = ot !== 'MARKET';
+  document.getElementById('cfScPriceRow').style.display = show ? 'flex' : 'none';
+  document.getElementById('cfScTriggerField').style.display = (ot === 'SL' || ot === 'SL-M') ? 'block' : 'none';
+}
+
+async function createInstruction() {
+  const label = document.getElementById('cfLabel').value.trim();
+  if (!label) { setAmStatus('cfStatus', 'err', 'Enter a label'); return; }
+  setAmStatus('cfStatus', '', 'Creating…');
+
+  let body = { type: cfType, label };
+  try {
+    if (cfType === 'futures_rollover') {
+      Object.assign(body, {
+        direction:      document.getElementById('cfDir').value,
+        exchange:       document.getElementById('cfExch').value,
+        current_symbol: document.getElementById('cfCurSym').value.trim().toUpperCase(),
+        next_symbol:    document.getElementById('cfNxtSym').value.trim().toUpperCase(),
+        quantity:       parseInt(document.getElementById('cfRollQty').value),
+        product:        document.getElementById('cfRollProd').value,
+        execute_date:   document.getElementById('cfRollDate').value,
+        execute_time:   document.getElementById('cfRollTime').value
+      });
+      if (!body.current_symbol || !body.next_symbol || !body.quantity || !body.execute_date)
+        throw new Error('Fill all rollover fields');
+    } else if (cfType === 'scheduled_order') {
+      const ot = document.getElementById('cfScOrdType').value;
+      Object.assign(body, {
+        tradingsymbol:    document.getElementById('cfScSym').value.trim().toUpperCase(),
+        exchange:         document.getElementById('cfScExch').value,
+        transaction_type: document.getElementById('cfScSide').value,
+        product:          document.getElementById('cfScProd').value,
+        order_type:       ot,
+        quantity:         parseInt(document.getElementById('cfScQty').value),
+        price:            ot !== 'MARKET' ? parseFloat(document.getElementById('cfScPrice').value) || 0 : 0,
+        trigger_price:    (ot === 'SL' || ot === 'SL-M') ? parseFloat(document.getElementById('cfScTrigger').value) || 0 : 0,
+        execute_date:     document.getElementById('cfScDate').value,
+        execute_time:     document.getElementById('cfScTime').value,
+        variety:          document.getElementById('cfScVariety').value
+      });
+      if (!body.tradingsymbol || !body.quantity || !body.execute_date)
+        throw new Error('Fill all order fields');
+    } else if (cfType === 'price_trigger') {
+      Object.assign(body, {
+        tradingsymbol:    document.getElementById('cfTrSym').value.trim().toUpperCase(),
+        exchange:         document.getElementById('cfTrExch').value,
+        condition:        document.getElementById('cfTrCond').value,
+        trigger_price:    parseFloat(document.getElementById('cfTrPrice').value),
+        transaction_type: document.getElementById('cfTrSide').value,
+        product:          document.getElementById('cfTrProd').value,
+        order_type:       document.getElementById('cfTrOrdType').value,
+        quantity:         parseInt(document.getElementById('cfTrQty').value),
+        max_retries:      parseInt(document.getElementById('cfTrRetries').value)
+      });
+      if (!body.tradingsymbol || !body.trigger_price || !body.quantity)
+        throw new Error('Fill all trigger fields');
+    }
+
+    await workerFetch('/instructions', { method: 'POST', body: JSON.stringify(body) });
+    setAmStatus('cfStatus', 'ok', '✓ Instruction created');
+    document.getElementById('cfLabel').value = '';
+    setTimeout(() => switchAmTab('instr'), 800);
+  } catch (e) {
+    setAmStatus('cfStatus', 'err', e.message);
+  }
+}
+
+// ── History ──
+async function loadHistory() {
+  const list  = document.getElementById('histList');
+  const empty = document.getElementById('histEmpty');
+  if (!autoWorkerUrl) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+  list.innerHTML = '';
+  try {
+    const items = await workerFetch('/history?limit=50');
+    if (!items.length) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    items.forEach(h => {
+      const el = document.createElement('div');
+      el.className = 'hist-entry';
+      const d = JSON.stringify(h.data || {}).substring(0, 120);
+      el.innerHTML =
+        `<div class="hist-ico">${h.success ? '✅' : '❌'}</div>` +
+        `<div class="hist-info">` +
+          `<div class="hist-label">${esc(h.instrId)}</div>` +
+          `<div class="hist-detail">${esc(d)}</div>` +
+        `</div>` +
+        `<div class="hist-time">${h.at ? new Date(h.at).toLocaleString('en-AU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}) : '--'}</div>`;
+      list.appendChild(el);
+    });
+  } catch (e) { empty.style.display = 'block'; empty.textContent = 'Error: ' + e.message; }
+}
+
+function setAmStatus(id, type, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = msg; el.className = 'am-status ' + type;
+}
+
 // ── KITE CONNECT ──
 const SK_KITE = 'k_cred';
 const KITE_BASE = 'https://api.kite.trade';
@@ -708,10 +1346,12 @@ async function connectKite(){
   btn.disabled=true; btn.textContent='Connecting…';
   showKmStatus('','Fetching holdings from Kite…');
   try{
+    // Route through worker proxy when configured (solves CORS); else try direct
+    const kBase = autoWorkerUrl ? autoWorkerUrl+'/kite' : KITE_BASE;
     const headers={'Authorization':'token '+apiKey+':'+accessToken,'X-Kite-Version':'3'};
     const [hResp,pResp] = await Promise.all([
-      fetch(KITE_BASE+'/portfolio/holdings',{headers}),
-      fetch(KITE_BASE+'/portfolio/positions',{headers})
+      fetch(kBase+'/portfolio/holdings',{headers}),
+      fetch(kBase+'/portfolio/positions',{headers})
     ]);
     if(hResp.status===403||hResp.status===401){
       let errMsg='Invalid API key or access token';
@@ -732,6 +1372,8 @@ async function connectKite(){
     syncKiteToScreener(creds.holdings);
     renderKiteHoldings(creds.holdings,creds.positions);
     updateKiteUI(true);
+    // Push creds to automation worker if configured
+    if(autoWorkerUrl) workerFetch('/auth/kite',{method:'POST',body:JSON.stringify({apiKey,accessToken})}).catch(()=>{});
     document.getElementById('kmDisco').style.display='block';
     document.getElementById('kmSyncBtn').style.display='block';
     document.getElementById('kmSyncTime').textContent='Synced '+syncTime;
