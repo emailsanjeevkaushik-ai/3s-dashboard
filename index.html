@@ -144,6 +144,58 @@ textarea.note-in:focus{border-color:var(--accent);}
 .toast.show{transform:translateY(0);opacity:1;}
 .toast.ok{border-color:var(--green-dim);color:var(--green);}
 .toast.err{border-color:var(--red-dim);color:var(--red);}
+/* ── Kite Connect ── */
+.kite-btn{display:flex;align-items:center;gap:6px;background:#16a34a;color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;transition:opacity .15s;}
+.kite-btn:hover{opacity:.85;}
+.kite-btn.connected{background:var(--green);}
+.kite-dot{width:6px;height:6px;border-radius:50%;background:#fff;display:inline-block;}
+.kite-dot.live{background:#4ade80;box-shadow:0 0 4px #4ade80;}
+/* Kite modal */
+.km-ov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:300;opacity:0;pointer-events:none;transition:opacity .2s;}
+.km-ov.open{opacity:1;pointer-events:all;}
+.km-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-60%);width:440px;max-width:95vw;background:var(--surface);border:1px solid var(--border2);border-radius:8px;z-index:301;opacity:0;pointer-events:none;transition:all .22s cubic-bezier(.4,0,.2,1);}
+.km-modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%);}
+.km-hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border);}
+.km-title{font-size:13px;font-weight:800;letter-spacing:.1em;color:var(--green);}
+.km-sync-time{font-family:var(--mono);font-size:9px;color:var(--text3);}
+.km-body{padding:18px 20px 20px;}
+.km-steps{background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:14px;font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.9;}
+.km-steps a{color:var(--accent);text-decoration:none;}
+.km-steps a:hover{text-decoration:underline;}
+.km-field{margin-bottom:11px;}
+.km-field label{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:5px;}
+.km-field label span{text-transform:none;color:var(--text3);}
+.km-field input{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;border-radius:4px;outline:none;transition:border-color .15s;}
+.km-field input:focus{border-color:var(--green);}
+.km-row{display:flex;gap:8px;margin-top:4px;}
+.km-conn-btn{flex:1;background:#16a34a;color:#fff;font-family:var(--display);font-size:11px;font-weight:800;letter-spacing:.08em;border:none;padding:9px;border-radius:4px;cursor:pointer;transition:opacity .15s;}
+.km-conn-btn:hover{opacity:.85;}
+.km-sync-btn{background:var(--surface2);color:var(--text2);font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:1px solid var(--border2);padding:9px 14px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:border-color .15s;}
+.km-sync-btn:hover{border-color:var(--green);color:var(--green);}
+.km-status{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:9px;min-height:14px;line-height:1.6;}
+.km-status.ok{color:var(--green);}
+.km-status.err{color:var(--red);}
+.km-status.warn{color:var(--amber);}
+.km-disco{margin-top:10px;text-align:right;}
+.km-disco button{background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:var(--mono);font-size:10px;padding:5px 12px;border-radius:3px;cursor:pointer;transition:all .12s;}
+.km-disco button:hover{border-color:var(--red-dim);color:var(--red);}
+/* Kite portfolio strip */
+.kite-strip-hdr{display:none;align-items:center;gap:8px;padding:8px 28px;background:rgba(34,197,94,.05);border-bottom:1px solid rgba(34,197,94,.15);font-family:var(--mono);font-size:9px;color:var(--green);font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;user-select:none;}
+.kite-strip-hdr:hover{background:rgba(34,197,94,.09);}
+.kite-strip-hdr.show{display:flex;}
+.kite-pnl-pill{font-size:10px;padding:1px 7px;border-radius:3px;border:1px solid;}
+.kite-pnl-pill.pos{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.25);color:var(--green);}
+.kite-pnl-pill.neg{background:rgba(239,68,68,.06);border-color:rgba(239,68,68,.2);color:var(--red);}
+.kite-holdings-wrap{display:none;background:var(--surface2);border-bottom:1px solid var(--border);}
+.kite-holdings-wrap.show{display:block;}
+.kite-h-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px;min-width:700px;}
+.kite-h-table thead th{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;padding:7px 12px;border-bottom:1px solid var(--border);white-space:nowrap;position:sticky;top:56px;background:var(--surface2);z-index:40;}
+.kite-h-table thead th:first-child{padding-left:28px;}
+.kite-h-table tbody td{padding:6px 12px;color:var(--text2);border-bottom:1px solid var(--border);white-space:nowrap;}
+.kite-h-table tbody td:first-child{padding-left:28px;color:var(--text);font-weight:600;}
+/* Kite drawer section */
+.kite-pos-card{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:4px;padding:10px 12px;margin-top:6px;}
+.kite-pos-badge{display:inline-flex;align-items:center;gap:4px;font-family:var(--mono);font-size:9px;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
 </style>
 </head>
 <body>
@@ -156,6 +208,9 @@ textarea.note-in:focus{border-color:var(--accent);}
     <div class="btn-group">
       <button class="demo-btn" onclick="loadDemo()">
         &#9654; DEMO MODE
+      </button>
+      <button class="kite-btn" id="kiteBtn" onclick="openKiteModal()">
+        <span class="kite-dot" id="kiteDot"></span> KITE
       </button>
       <button class="refresh-btn" id="runBtn" onclick="runScreener()">
         <svg id="runIco" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -176,6 +231,24 @@ textarea.note-in:focus{border-color:var(--accent);}
   <div class="stat-box"><div class="stat-label">PASS</div><div class="stat-val green" id="sPass">—</div><div class="stat-sub">your rating</div></div>
   <div class="stat-box"><div class="stat-label">WATCH</div><div class="stat-val amber" id="sWatch">—</div><div class="stat-sub">your rating</div></div>
   <div class="stat-box"><div class="stat-label">Universe</div><div class="stat-val" id="sUni" style="color:var(--text2)">—</div><div class="stat-sub">US stocks scanned</div></div>
+</div>
+<div class="kite-strip-hdr" id="kiteStripHdr" onclick="toggleKiteHoldings()">
+  <span class="kite-dot live"></span>
+  <span>KITE PORTFOLIO</span>
+  <span id="kiteHCount" style="color:var(--text3);font-weight:400">0 holdings</span>
+  <span id="kiteTotalPnl" class="kite-pnl-pill pos" style="display:none"></span>
+  <span style="margin-left:auto;color:var(--text3);font-weight:400" id="kiteToggleArrow">▼ SHOW</span>
+</div>
+<div class="kite-holdings-wrap" id="kiteHoldingsWrap">
+  <div style="overflow-x:auto">
+  <table class="kite-h-table">
+    <thead><tr>
+      <th>Symbol</th><th>Exchange</th><th>Qty</th><th>Avg Price</th><th>LTP</th><th>Day Change</th><th>P&amp;L</th><th>P&amp;L %</th><th>Invested</th><th>Current Value</th>
+    </tr></thead>
+    <tbody id="kiteHBody"></tbody>
+    <tfoot id="kiteHFoot"></tfoot>
+  </table>
+  </div>
 </div>
 <div class="controls">
   <div class="search-wrap">
@@ -252,10 +325,51 @@ textarea.note-in:focus{border-color:var(--accent);}
       <textarea class="note-in" id="noteIn" placeholder="Add a note — timestamped automatically…"></textarea>
       <button class="add-btn" onclick="addNote()">+ ADD NOTE</button>
     </div>
+    <div class="dsec" id="dKiteSection" style="display:none">
+      <div class="dsec-title" style="color:var(--green)">Kite Position</div>
+      <div class="kite-pos-card" id="dKitePos"></div>
+    </div>
     <div class="dsec"><div class="dsec-title">Fundamentals</div><div class="kv-grid" id="dFund"></div></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
+
+<!-- Kite Connect Modal -->
+<div class="km-ov" id="kmOv" onclick="closeKiteModal()"></div>
+<div class="km-modal" id="kmModal">
+  <div class="km-hdr">
+    <div>
+      <div class="km-title">KITE CONNECT</div>
+      <div class="km-sync-time" id="kmSyncTime"></div>
+    </div>
+    <button class="dclose" onclick="closeKiteModal()">&#215;</button>
+  </div>
+  <div class="km-body">
+    <div class="km-steps">
+      1. Go to <a href="https://developers.kite.trade" target="_blank" rel="noopener">developers.kite.trade</a> &#8594; create an app &#8594; get your <strong>API Key</strong><br>
+      2. Open <code>https://kite.zerodha.com/connect/login?api_key=YOUR_KEY&amp;v=3</code> in browser<br>
+      3. Login &#8594; copy the <strong>request_token</strong> from the redirect URL<br>
+      4. Generate an <strong>access_token</strong> via your backend (or use Kite&#39;s developer console)<br>
+      5. Paste both below — your holdings sync automatically to the screener
+    </div>
+    <div class="km-field">
+      <label>API Key</label>
+      <input type="text" id="kApiKey" placeholder="e.g. xxxabc123">
+    </div>
+    <div class="km-field">
+      <label>Access Token <span>(valid for the current trading day)</span></label>
+      <input type="text" id="kToken" placeholder="Paste today&#39;s access token">
+    </div>
+    <div class="km-row">
+      <button class="km-conn-btn" id="kmConnBtn" onclick="connectKite()">CONNECT &amp; SYNC</button>
+      <button class="km-sync-btn" id="kmSyncBtn" onclick="refreshKite()" style="display:none">&#8635; REFRESH</button>
+    </div>
+    <div class="km-status" id="kmStatus"></div>
+    <div class="km-disco" id="kmDisco" style="display:none">
+      <button onclick="disconnectKite()">Disconnect Kite</button>
+    </div>
+  </div>
+</div>
 
 <script>
 const PROXY = 'https://3s-proxy.emailsanjeevkaushik.workers.dev';
@@ -306,6 +420,7 @@ function init(){
   if(stocks){ all=stocks; applyFilters(); updateSummary(); }
   const mkt = lsGet(SK.mkt);
   if(mkt) renderMkt(mkt);
+  initKite();
 }
 
 async function runScreener(){
@@ -483,6 +598,29 @@ function openD(ticker){
   document.querySelectorAll('.s-btn').forEach(b=>b.classList.toggle('active',b.dataset.s===(ov.status||'WATCH')));
   renderNotes(ov.notes||[]);
   document.getElementById('noteIn').value='';
+  // Kite position
+  const kiteSection=document.getElementById('dKiteSection');
+  const kitePosEl=document.getElementById('dKitePos');
+  const kd=ov.kite;
+  if(kd){
+    kiteSection.style.display='block';
+    const pnl=kd.pnl||0;
+    const pnlPct=kd.avg_price>0?((kd.ltp-kd.avg_price)/kd.avg_price*100):0;
+    const dc=kd.day_change||0;
+    const dcp=kd.day_change_pct||0;
+    kitePosEl.innerHTML=
+      '<div class="kite-pos-badge"><span class="kite-dot live"></span> KITE HOLDING</div>'+
+      '<div class="kv-grid">'+
+      '<div class="kv"><div class="kv-l">Qty</div><div class="kv-v">'+kd.qty+(kd.t1qty?' <span style="color:var(--text3);font-size:10px">+'+kd.t1qty+' T1</span>':'')+'</div></div>'+
+      '<div class="kv"><div class="kv-l">Avg Price</div><div class="kv-v">₹'+(kd.avg_price||0).toFixed(2)+'</div></div>'+
+      '<div class="kv"><div class="kv-l">LTP</div><div class="kv-v">₹'+(kd.ltp||0).toFixed(2)+'</div></div>'+
+      '<div class="kv"><div class="kv-l">Day Change</div><div class="kv-v '+(dc>=0?'pos':'neg')+'">'+(dc>=0?'+':'')+dc.toFixed(2)+' ('+(dcp>=0?'+':'')+dcp.toFixed(2)+'%)</div></div>'+
+      '<div class="kv"><div class="kv-l">P&L</div><div class="kv-v '+(pnl>=0?'pos':'neg')+'">'+(pnl>=0?'+':'')+fmtInr(pnl)+'</div></div>'+
+      '<div class="kv"><div class="kv-l">P&L %</div><div class="kv-v '+(pnlPct>=0?'pos':'neg')+'">'+(pnlPct>=0?'+':'')+pnlPct.toFixed(2)+'%</div></div>'+
+      '</div>';
+  } else {
+    kiteSection.style.display='none';
+  }
   document.getElementById('ov').classList.add('open');
   document.getElementById('dr').classList.add('open');
 }
@@ -520,7 +658,220 @@ function fv(v){if(!v)return'--';if(v>=1e6)return(v/1e6).toFixed(1)+'M';if(v>=1e3
 function fmtN(v){return v!=null?(v>=0?'+':'')+Number(v).toFixed(1):'--';}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function toast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');setTimeout(()=>{t.className='toast';},3000);}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeD();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeD();closeKiteModal();}});
+
+// ── KITE CONNECT ──
+const SK_KITE = 'k_cred';
+const KITE_BASE = 'https://api.kite.trade';
+let kiteData = null;
+let kiteHoldingsVisible = false;
+
+function initKite(){
+  const creds = lsGet(SK_KITE);
+  if(creds && creds.apiKey && creds.accessToken && creds.holdings){
+    kiteData = creds;
+    updateKiteUI(true);
+    renderKiteHoldings(creds.holdings, creds.positions||[]);
+    syncKiteToScreener(creds.holdings);
+  }
+}
+
+function openKiteModal(){
+  const creds = lsGet(SK_KITE)||{};
+  document.getElementById('kApiKey').value = creds.apiKey||'';
+  document.getElementById('kToken').value = creds.accessToken||'';
+  if(creds.holdings){
+    showKmStatus('ok','✓ Connected — '+(creds.holdings.length)+' holdings · Last sync: '+(creds.syncTime||'?'));
+    document.getElementById('kmDisco').style.display='block';
+    document.getElementById('kmSyncBtn').style.display='block';
+    document.getElementById('kmSyncTime').textContent='Synced '+( creds.syncTime||'');
+  }
+  document.getElementById('kmOv').classList.add('open');
+  document.getElementById('kmModal').classList.add('open');
+}
+
+function closeKiteModal(){
+  document.getElementById('kmOv').classList.remove('open');
+  document.getElementById('kmModal').classList.remove('open');
+}
+
+function showKmStatus(type,msg){
+  const el=document.getElementById('kmStatus');
+  el.textContent=msg; el.className='km-status '+(type||'');
+}
+
+async function connectKite(){
+  const apiKey=document.getElementById('kApiKey').value.trim();
+  const accessToken=document.getElementById('kToken').value.trim();
+  if(!apiKey||!accessToken){toast('Enter both API Key and Access Token','err');return;}
+  const btn=document.getElementById('kmConnBtn');
+  btn.disabled=true; btn.textContent='Connecting…';
+  showKmStatus('','Fetching holdings from Kite…');
+  try{
+    const headers={'Authorization':'token '+apiKey+':'+accessToken,'X-Kite-Version':'3'};
+    const [hResp,pResp] = await Promise.all([
+      fetch(KITE_BASE+'/portfolio/holdings',{headers}),
+      fetch(KITE_BASE+'/portfolio/positions',{headers})
+    ]);
+    if(hResp.status===403||hResp.status===401){
+      let errMsg='Invalid API key or access token';
+      try{const ed=await hResp.json();errMsg=ed.message||errMsg;}catch{}
+      throw new Error(errMsg);
+    }
+    if(!hResp.ok) throw new Error('Holdings HTTP '+hResp.status);
+    const hData=await hResp.json();
+    if(hData.status!=='success') throw new Error(hData.message||'Holdings fetch failed');
+    let positions=[];
+    if(pResp.ok){
+      const pData=await pResp.json();
+      if(pData.status==='success') positions=[...(pData.data?.net||[]),...(pData.data?.day||[])];
+    }
+    const syncTime=new Date().toLocaleString('en-AU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+    const creds={apiKey,accessToken,holdings:hData.data||[],positions,syncTime};
+    lsSet(SK_KITE,creds); kiteData=creds;
+    syncKiteToScreener(creds.holdings);
+    renderKiteHoldings(creds.holdings,creds.positions);
+    updateKiteUI(true);
+    document.getElementById('kmDisco').style.display='block';
+    document.getElementById('kmSyncBtn').style.display='block';
+    document.getElementById('kmSyncTime').textContent='Synced '+syncTime;
+    showKmStatus('ok','✓ Connected — '+creds.holdings.length+' holdings, '+positions.length+' positions synced');
+    toast('Kite connected — '+creds.holdings.length+' holdings','ok');
+  }catch(e){
+    const msg=e.message||'';
+    if(msg.toLowerCase().includes('failed to fetch')||msg.toLowerCase().includes('networkerror')||msg.toLowerCase().includes('load failed')){
+      showKmStatus('warn','⚠ CORS error — Kite API blocks direct browser requests. Update your Cloudflare Worker at 3s-proxy to forward /kite/* to api.kite.trade with the Authorization header, then retry.');
+    } else {
+      showKmStatus('err','✗ '+msg);
+    }
+    toast('Kite: '+msg.substring(0,70),'err');
+  }finally{
+    btn.disabled=false; btn.textContent='CONNECT & SYNC';
+  }
+}
+
+async function refreshKite(){
+  const creds=lsGet(SK_KITE)||{};
+  document.getElementById('kApiKey').value=creds.apiKey||'';
+  document.getElementById('kToken').value=creds.accessToken||'';
+  await connectKite();
+}
+
+function disconnectKite(){
+  if(!confirm('Disconnect Kite and remove all synced position data?'))return;
+  Object.keys(OV).forEach(k=>{if(OV[k])delete OV[k].kite;});
+  lsSet(SK.ov,OV); lsSet(SK_KITE,null); kiteData=null;
+  updateKiteUI(false);
+  document.getElementById('kmDisco').style.display='none';
+  document.getElementById('kmSyncBtn').style.display='none';
+  document.getElementById('kmSyncTime').textContent='';
+  document.getElementById('kiteHoldingsWrap').classList.remove('show');
+  kiteHoldingsVisible=false;
+  document.getElementById('kiteToggleArrow').textContent='▼ SHOW';
+  showKmStatus('','');
+  applyFilters(); updateSummary();
+  toast('Kite disconnected','ok');
+  closeKiteModal();
+}
+
+function updateKiteUI(connected){
+  const btn=document.getElementById('kiteBtn');
+  const dot=document.getElementById('kiteDot');
+  const hdr=document.getElementById('kiteStripHdr');
+  if(connected){
+    btn.classList.add('connected');
+    btn.innerHTML='<span class="kite-dot live" id="kiteDot"></span> KITE ✓';
+    hdr.classList.add('show');
+  } else {
+    btn.classList.remove('connected');
+    btn.innerHTML='<span class="kite-dot" id="kiteDot"></span> KITE';
+    hdr.classList.remove('show');
+  }
+}
+
+function syncKiteToScreener(holdings){
+  if(!holdings||!holdings.length) return;
+  const kiteMap={};
+  holdings.forEach(h=>{
+    const sym=(h.tradingsymbol||'').replace(/-EQ$/,'').replace(/&/g,'').toUpperCase();
+    kiteMap[sym]=h;
+  });
+  all.forEach(s=>{
+    const kh=kiteMap[s.ticker];
+    if(kh){
+      if(!OV[s.ticker]) OV[s.ticker]={};
+      if(!OV[s.ticker].status||OV[s.ticker].status==='WATCH') OV[s.ticker].status='POSITION';
+      OV[s.ticker].kite={
+        qty:kh.quantity,t1qty:kh.t1_quantity||0,
+        avg_price:kh.average_price,ltp:kh.last_price,
+        pnl:kh.pnl,day_change:kh.day_change||0,day_change_pct:kh.day_change_percentage||0,
+        exchange:kh.exchange,isin:kh.isin
+      };
+    }
+  });
+  lsSet(SK.ov,OV); updateSummary(); applyFilters();
+}
+
+function renderKiteHoldings(holdings,positions){
+  if(!holdings||!holdings.length) return;
+  const totalPnl=holdings.reduce((s,h)=>s+(h.pnl||0),0);
+  const totalInvested=holdings.reduce((s,h)=>s+(h.average_price||0)*(h.quantity||0),0);
+  const totalCurrent=holdings.reduce((s,h)=>s+(h.last_price||0)*(h.quantity||0),0);
+
+  document.getElementById('kiteHCount').textContent=holdings.length+' holdings';
+  const pill=document.getElementById('kiteTotalPnl');
+  const pnlPct=totalInvested>0?((totalCurrent-totalInvested)/totalInvested*100):0;
+  pill.textContent=(totalPnl>=0?'+':'')+fmtInr(totalPnl)+' ('+(pnlPct>=0?'+':'')+pnlPct.toFixed(2)+'%)';
+  pill.className='kite-pnl-pill '+(totalPnl>=0?'pos':'neg');
+  pill.style.display='inline-block';
+
+  document.getElementById('kiteHBody').innerHTML=holdings.map(h=>{
+    const pnl=h.pnl||0;
+    const pnlPct=h.average_price>0?((h.last_price-h.average_price)/h.average_price*100):0;
+    const inv=(h.average_price||0)*(h.quantity||0);
+    const cur=(h.last_price||0)*(h.quantity||0);
+    const dc=h.day_change||0;
+    const dcp=h.day_change_percentage||0;
+    return '<tr>'+
+      '<td>'+esc(h.tradingsymbol||'--')+'</td>'+
+      '<td style="color:var(--text3)">'+esc(h.exchange||'--')+'</td>'+
+      '<td>'+(h.quantity||0)+(h.t1_quantity?'<span style="color:var(--text3);font-size:9px"> +'+h.t1_quantity+'T1</span>':'')+'</td>'+
+      '<td>₹'+(h.average_price||0).toFixed(2)+'</td>'+
+      '<td style="color:var(--text)">₹'+(h.last_price||0).toFixed(2)+'</td>'+
+      '<td class="'+(dc>=0?'pos':'neg')+'">'+(dc>=0?'+':'')+dc.toFixed(2)+' ('+(dcp>=0?'+':'')+dcp.toFixed(2)+'%)</td>'+
+      '<td class="'+(pnl>=0?'pos':'neg')+'">'+(pnl>=0?'+':'')+fmtInr(pnl)+'</td>'+
+      '<td class="'+(pnlPct>=0?'pos':'neg')+'">'+(pnlPct>=0?'+':'')+pnlPct.toFixed(2)+'%</td>'+
+      '<td style="color:var(--text3)">₹'+fmtInr(inv)+'</td>'+
+      '<td style="color:var(--text2)">₹'+fmtInr(cur)+'</td>'+
+      '</tr>';
+  }).join('');
+
+  document.getElementById('kiteHFoot').innerHTML=
+    '<tr style="border-top:2px solid var(--border2);font-weight:600">'+
+    '<td colspan="6" style="color:var(--text3);font-size:10px;padding-left:28px">TOTAL</td>'+
+    '<td class="'+(totalPnl>=0?'pos':'neg')+'">₹'+fmtInr(totalPnl)+'</td>'+
+    '<td class="'+(pnlPct>=0?'pos':'neg')+'">'+(pnlPct>=0?'+':'')+pnlPct.toFixed(2)+'%</td>'+
+    '<td style="color:var(--text3)">₹'+fmtInr(totalInvested)+'</td>'+
+    '<td style="color:var(--text2)">₹'+fmtInr(totalCurrent)+'</td>'+
+    '</tr>';
+}
+
+function toggleKiteHoldings(){
+  kiteHoldingsVisible=!kiteHoldingsVisible;
+  document.getElementById('kiteHoldingsWrap').classList.toggle('show',kiteHoldingsVisible);
+  document.getElementById('kiteToggleArrow').textContent=kiteHoldingsVisible?'▲ HIDE':'▼ SHOW';
+}
+
+function fmtInr(v){
+  if(v==null)return'--';
+  const abs=Math.abs(v);
+  let s;
+  if(abs>=1e7) s=(v/1e7).toFixed(2)+' Cr';
+  else if(abs>=1e5) s=(v/1e5).toFixed(2)+' L';
+  else s=v.toFixed(2);
+  return s;
+}
+
 init();
 </script>
 </body>
