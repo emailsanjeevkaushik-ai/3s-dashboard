@@ -224,6 +224,50 @@ textarea.note-in:focus{border-color:var(--accent);}
 .hist-detail{font-size:9px;color:var(--text3);margin-top:2px;word-break:break-all;}
 .hist-time{font-size:9px;color:var(--text3);flex-shrink:0;}
 .empty-hint{font-family:var(--mono);font-size:11px;color:var(--text3);text-align:center;padding:30px 0;font-style:italic;}
+.instr-status.awaiting_fill{background:rgba(34,211,238,.08);border-color:rgba(34,211,238,.3);color:var(--cyan);}
+.instr-status.entry_failed{background:rgba(239,68,68,.06);border-color:rgba(239,68,68,.2);color:var(--red);}
+.instr-status.fill_timeout{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.25);color:var(--amber);}
+.instr-card.awaiting_fill{border-color:rgba(34,211,238,.25);background:rgba(34,211,238,.03);}
+.instr-card.entry_failed{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.03);}
+/* ── Symbol Picker ── */
+.sp-wrap{position:relative;}
+.sp-wrap input[type=text]{width:100%;background:var(--surface2);border:1px solid var(--border2);color:var(--text);font-family:var(--mono);font-size:12px;padding:8px 10px;border-radius:4px;outline:none;transition:border-color .15s;}
+.sp-wrap input[type=text]:focus{border-color:var(--purple);}
+.sp-dropdown{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;max-height:340px;overflow-y:auto;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,.4);}
+.sp-dropdown.show{display:block;}
+.sp-grp-lbl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;padding:8px 10px 4px;}
+.sp-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 10px;cursor:pointer;font-family:var(--mono);font-size:11px;color:var(--text2);transition:background .1s;}
+.sp-item:hover{background:var(--surface);}
+.sp-item .sp-item-sym{color:var(--text);font-weight:600;}
+.sp-item .sp-item-meta{color:var(--text3);font-size:9px;}
+.sp-empty{padding:14px 10px;font-family:var(--mono);font-size:10px;color:var(--text3);font-style:italic;}
+.sp-expiry-row{display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px 10px;}
+.sp-expiry-btn{font-family:var(--mono);font-size:10px;font-weight:600;padding:5px 10px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;}
+.sp-expiry-btn:hover,.sp-expiry-btn.active{border-color:var(--purple);color:var(--purple);background:rgba(167,139,250,.1);}
+.sp-chain{padding:0 6px 8px;}
+.sp-chain-row{display:grid;grid-template-columns:1fr 60px 1fr;gap:4px;align-items:center;padding:3px 4px;}
+.sp-chain-strike{text-align:center;font-family:var(--mono);font-size:10px;color:var(--text3);font-weight:600;}
+.sp-chain-cell{font-family:var(--mono);font-size:10px;padding:5px 6px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;text-align:center;transition:all .1s;}
+.sp-chain-cell:hover{border-color:var(--purple);color:var(--purple);}
+.sp-chain-cell.ce{color:var(--green);}
+.sp-chain-cell.pe{color:var(--red);}
+.sp-selected{margin-top:8px;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.25);border-radius:4px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.sp-selected-info{font-family:var(--mono);font-size:11px;color:var(--text);}
+.sp-selected-info .sp-sub{color:var(--text3);font-size:10px;margin-top:2px;}
+.sp-selected-price{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--green);white-space:nowrap;}
+.sp-selected-price.stale{color:var(--amber);}
+.sp-clear-btn{background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:var(--mono);font-size:9px;padding:4px 8px;border-radius:3px;cursor:pointer;flex-shrink:0;}
+.sp-clear-btn:hover{border-color:var(--red-dim);color:var(--red);}
+.sp-qty-hint{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:-6px;}
+/* Rollover slots */
+.roll-slot{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:9px 12px;cursor:pointer;transition:border-color .15s;}
+.roll-slot.active{border-color:var(--purple);}
+.roll-slot-lbl{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:.08em;margin-bottom:3px;}
+.roll-slot-val{font-family:var(--mono);font-size:12px;color:var(--text);}
+/* SL/Target */
+.sltgt-toggle{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--text2);cursor:pointer;text-transform:none;}
+.sltgt-toggle input{width:auto;}
+.sltgt-note{font-family:var(--mono);font-size:10px;color:var(--purple);background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);border-radius:4px;padding:8px 10px;margin-top:6px;}
 /* ── Kite Connect ── */
 .kite-btn{display:flex;align-items:center;gap:6px;background:#16a34a;color:#fff;font-family:var(--display);font-size:11px;font-weight:700;letter-spacing:.08em;border:none;padding:7px 14px;border-radius:4px;cursor:pointer;transition:opacity .15s;}
 .kite-btn:hover{opacity:.85;}
@@ -458,29 +502,30 @@ textarea.note-in:focus{border-color:var(--accent);}
             <select id="cfDir"><option value="LONG">LONG (holding BUY)</option><option value="SHORT">SHORT (holding SELL)</option></select>
           </div>
           <div class="am-field">
-            <label>Exchange</label>
-            <select id="cfExch"><option>NFO</option><option>BFO</option><option>MCX</option><option>CDS</option></select>
-          </div>
-        </div>
-        <div class="am-row">
-          <div class="am-field">
-            <label>Current symbol (exit)</label>
-            <input type="text" id="cfCurSym" placeholder="e.g. NIFTY24JUNFUT">
-          </div>
-          <div class="am-field">
-            <label>Next symbol (entry)</label>
-            <input type="text" id="cfNxtSym" placeholder="e.g. NIFTY24JULFUT">
-          </div>
-        </div>
-        <div class="am-row">
-          <div class="am-field">
             <label>Quantity (lots)</label>
-            <input type="number" id="cfRollQty" min="1" placeholder="50">
+            <input type="number" id="cfRollLots" min="1" placeholder="e.g. 2">
           </div>
-          <div class="am-field">
-            <label>Product</label>
-            <select id="cfRollProd"><option value="NRML">NRML (carry forward)</option><option value="MIS">MIS (intraday)</option></select>
+        </div>
+        <div class="am-field">
+          <label>Underlying <span>(type a ticker — pick current &amp; next month futures below)</span></label>
+          <div class="sp-wrap" id="sp-roll">
+            <input type="text" id="sp-roll-input" placeholder="e.g. NIFTY, RELIANCE" autocomplete="off" oninput="spOnInput('roll')">
+            <div class="sp-dropdown" id="sp-roll-dropdown"></div>
           </div>
+        </div>
+        <div class="am-row">
+          <div class="roll-slot" id="rollSlotCur" onclick="rollActivateSlot('current')">
+            <div class="roll-slot-lbl">CURRENT (to exit)</div>
+            <div class="roll-slot-val" id="rollCurVal">— click a futures expiry below —</div>
+          </div>
+          <div class="roll-slot" id="rollSlotNxt" onclick="rollActivateSlot('next')">
+            <div class="roll-slot-lbl">NEXT (to enter)</div>
+            <div class="roll-slot-val" id="rollNxtVal">— click a futures expiry below —</div>
+          </div>
+        </div>
+        <div class="am-field">
+          <label>Product</label>
+          <select id="cfRollProd"><option value="NRML">NRML (carry forward)</option><option value="MIS">MIS (intraday)</option></select>
         </div>
         <div class="am-row">
           <div class="am-field">
@@ -496,15 +541,13 @@ textarea.note-in:focus{border-color:var(--accent);}
 
       <!-- Scheduled Order -->
       <div class="cf-section" id="cfScheduled">
-        <div class="am-row">
-          <div class="am-field">
-            <label>Symbol</label>
-            <input type="text" id="cfScSym" placeholder="e.g. RELIANCE">
+        <div class="am-field">
+          <label>Symbol <span>(stock, or its futures / options — appears as you type)</span></label>
+          <div class="sp-wrap" id="sp-sc">
+            <input type="text" id="sp-sc-input" placeholder="e.g. RELIANCE, NIFTY" autocomplete="off" oninput="spOnInput('sc')">
+            <div class="sp-dropdown" id="sp-sc-dropdown"></div>
           </div>
-          <div class="am-field">
-            <label>Exchange</label>
-            <select id="cfScExch"><option>NSE</option><option>BSE</option><option>NFO</option><option>MCX</option><option>CDS</option></select>
-          </div>
+          <div class="sp-selected" id="sp-sc-selected" style="display:none"></div>
         </div>
         <div class="am-row">
           <div class="am-field">
@@ -525,10 +568,11 @@ textarea.note-in:focus{border-color:var(--accent);}
             </select>
           </div>
           <div class="am-field">
-            <label>Quantity</label>
-            <input type="number" id="cfScQty" min="1" placeholder="10">
+            <label id="cfScQtyLbl">Quantity</label>
+            <input type="number" id="cfScQty" min="1" placeholder="10" oninput="spUpdateQtyHint('sc')">
           </div>
         </div>
+        <div class="am-field sp-qty-hint" id="sp-sc-qty-hint" style="display:none"></div>
         <div class="am-row" id="cfScPriceRow" style="display:none">
           <div class="am-field">
             <label>Price</label>
@@ -553,19 +597,27 @@ textarea.note-in:focus{border-color:var(--accent);}
           <label>Variety</label>
           <select id="cfScVariety"><option value="regular">Regular (market hours)</option><option value="amo">AMO (after market)</option></select>
         </div>
+        <div class="am-field">
+          <label class="sltgt-toggle">
+            <input type="checkbox" id="cfScSlTgtEnable" onchange="toggleSlTgt('sc')"> Attach Stop-Loss &amp; Target after fill
+          </label>
+        </div>
+        <div class="am-row" id="cfScSlTgtRow" style="display:none">
+          <div class="am-field"><label>Stop-Loss price</label><input type="number" id="cfScSlPrice" step="0.05" placeholder="0.00"></div>
+          <div class="am-field"><label>Target price</label><input type="number" id="cfScTgtPrice" step="0.05" placeholder="0.00"></div>
+        </div>
+        <div class="sltgt-note" id="cfScSlTgtNote" style="display:none">Once this order FILLS, a Stop-Loss + Target order (OCO — one cancels the other) is placed automatically.</div>
       </div>
 
       <!-- Price Trigger -->
       <div class="cf-section" id="cfTrigger">
-        <div class="am-row">
-          <div class="am-field">
-            <label>Symbol</label>
-            <input type="text" id="cfTrSym" placeholder="e.g. NIFTY24JUNFUT">
+        <div class="am-field">
+          <label>Symbol to watch &amp; trade <span>(stock, or its futures / options)</span></label>
+          <div class="sp-wrap" id="sp-tr">
+            <input type="text" id="sp-tr-input" placeholder="e.g. RELIANCE, NIFTY" autocomplete="off" oninput="spOnInput('tr')">
+            <div class="sp-dropdown" id="sp-tr-dropdown"></div>
           </div>
-          <div class="am-field">
-            <label>Exchange</label>
-            <select id="cfTrExch"><option>NSE</option><option>BSE</option><option>NFO</option><option>MCX</option></select>
-          </div>
+          <div class="sp-selected" id="sp-tr-selected" style="display:none"></div>
         </div>
         <div class="am-row">
           <div class="am-field">
@@ -598,14 +650,25 @@ textarea.note-in:focus{border-color:var(--accent);}
             <select id="cfTrOrdType"><option value="MARKET">MARKET</option><option value="LIMIT">LIMIT</option></select>
           </div>
           <div class="am-field">
-            <label>Quantity</label>
-            <input type="number" id="cfTrQty" min="1" placeholder="10">
+            <label id="cfTrQtyLbl">Quantity</label>
+            <input type="number" id="cfTrQty" min="1" placeholder="10" oninput="spUpdateQtyHint('tr')">
           </div>
         </div>
+        <div class="am-field sp-qty-hint" id="sp-tr-qty-hint" style="display:none"></div>
         <div class="am-field">
           <label>Max retries before giving up</label>
           <select id="cfTrRetries"><option value="3">3 (default)</option><option value="5">5</option><option value="1">1</option></select>
         </div>
+        <div class="am-field">
+          <label class="sltgt-toggle">
+            <input type="checkbox" id="cfTrSlTgtEnable" onchange="toggleSlTgt('tr')"> Attach Stop-Loss &amp; Target after fill
+          </label>
+        </div>
+        <div class="am-row" id="cfTrSlTgtRow" style="display:none">
+          <div class="am-field"><label>Stop-Loss price</label><input type="number" id="cfTrSlPrice" step="0.05" placeholder="0.00"></div>
+          <div class="am-field"><label>Target price</label><input type="number" id="cfTrTgtPrice" step="0.05" placeholder="0.00"></div>
+        </div>
+        <div class="sltgt-note" id="cfTrSlTgtNote" style="display:none">Once this order FILLS, a Stop-Loss + Target order (OCO — one cancels the other) is placed automatically.</div>
       </div>
 
       <div style="display:flex;gap:8px;margin-top:14px">
@@ -645,6 +708,17 @@ textarea.note-in:focus{border-color:var(--accent);}
         <button class="am-btn secondary" onclick="testWorker()">TEST CONNECTION</button>
       </div>
       <div class="am-status" id="amSetupStatus"></div>
+    </div>
+
+    <div style="margin-bottom:18px">
+      <div class="dsec-title" style="margin-bottom:10px">Instrument List (for ticker search)</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:14px">
+        Powers the ticker search in Create Instruction (stock / futures / options lookup, lot sizes, live prices).
+        Refreshes automatically once a day at 7:30 AM IST — click below to load it now.<br>
+        <span style="color:var(--amber)">⚠ This is a heavy operation. If your Worker is on Cloudflare's free plan, it may fail (CPU limit) — see worker/README.md.</span>
+      </div>
+      <button class="am-btn green" onclick="refreshInstrumentList()">REFRESH INSTRUMENT LIST NOW</button>
+      <div class="am-status" id="amInstrStatus"></div>
     </div>
 
     <div style="margin-bottom:18px">
@@ -996,6 +1070,7 @@ function saveIBD(){
 function fv(v){if(!v)return'--';if(v>=1e6)return(v/1e6).toFixed(1)+'M';if(v>=1e3)return(v/1e3).toFixed(0)+'K';return v;}
 function fmtN(v){return v!=null?(v>=0?'+':'')+Number(v).toFixed(1):'--';}
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function v(id){const el=document.getElementById(id);return el?el.value.trim():'';}
 function toast(msg,type){const t=document.getElementById('toast');t.textContent=msg;t.className='toast show'+(type?' '+type:'');setTimeout(()=>{t.className='toast';},3000);}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeD();closeKiteModal();}});
 
@@ -1035,6 +1110,7 @@ function switchAmTab(tab) {
   if (tab === 'instr')   loadInstructions();
   if (tab === 'history') loadHistory();
   if (tab === 'setup')   loadNotifyConfig();
+  if (tab === 'create')  rollActivateSlot('current');
 }
 
 // Worker API helper
@@ -1158,11 +1234,21 @@ function renderInstrCard(instr) {
     price_trigger:    `${instr.tradingsymbol} [${instr.exchange}] · ${instr.condition?.replace(/_/g,' ')} ₹${instr.trigger_price} → ${instr.transaction_type} ${instr.quantity}`
   };
 
+  const slTgtLine = instr.attach_sl_tgt?.enabled
+    ? `<div class="instr-meta">SL/Target: ₹${instr.attach_sl_tgt.sl_price} / ₹${instr.attach_sl_tgt.target_price}${instr.gtt_id ? ' · GTT #' + instr.gtt_id + ' attached' : ''}</div>`
+    : '';
+  const fillLine = instr.status === 'awaiting_fill'
+    ? `<div class="instr-meta">Entry order #${instr.entry_order_id} placed — watching for fill…</div>`
+    : instr.entry_fill_price
+    ? `<div class="instr-meta">Filled @ ₹${instr.entry_fill_price}</div>`
+    : '';
+
   el.innerHTML =
     `<div class="instr-type-dot ${instr.type}"></div>` +
     `<div class="instr-info">` +
       `<div class="instr-label">${esc(instr.label)}</div>` +
       `<div class="instr-meta">${esc(metaLines[instr.type] || instr.type)}</div>` +
+      slTgtLine + fillLine +
       `<span class="instr-status ${instr.status}">${instr.status.replace(/_/g,' ').toUpperCase()}</span>` +
       (instr.last_error ? `<div class="instr-err">⚠ ${esc(instr.last_error)}</div>` : '') +
     `</div>` +
@@ -1195,6 +1281,7 @@ function setCfType(type) {
     document.getElementById('cfType' + ({futures_rollover:'Rollover',scheduled_order:'Scheduled',price_trigger:'Trigger'}[t])).classList.toggle('active', t === type);
     document.getElementById('cf' + ({futures_rollover:'Rollover',scheduled_order:'Scheduled',price_trigger:'Trigger'}[t])).classList.toggle('show', t === type);
   });
+  if (type === 'futures_rollover') rollActivateSlot('current');
 }
 
 function toggleScPrice() {
@@ -1202,6 +1289,30 @@ function toggleScPrice() {
   const show = ot !== 'MARKET';
   document.getElementById('cfScPriceRow').style.display = show ? 'flex' : 'none';
   document.getElementById('cfScTriggerField').style.display = (ot === 'SL' || ot === 'SL-M') ? 'block' : 'none';
+}
+
+function toggleSlTgt(ns) {
+  const pfx = ns === 'sc' ? 'Sc' : 'Tr';
+  const enabled = document.getElementById('cf' + pfx + 'SlTgtEnable').checked;
+  document.getElementById('cf' + pfx + 'SlTgtRow').style.display = enabled ? 'flex' : 'none';
+  document.getElementById('cf' + pfx + 'SlTgtNote').style.display = enabled ? 'block' : 'none';
+}
+
+function resetCreateForm() {
+  ['sc','tr','roll'].forEach(spInit);
+  rollSelection = { current: null, next: null };
+  ['sc','tr'].forEach(ns => {
+    const inp = document.getElementById(`sp-${ns}-input`); if (inp) inp.value = '';
+    const dd = document.getElementById(`sp-${ns}-dropdown`); if (dd) { dd.classList.remove('show'); dd.innerHTML = ''; }
+    const sel = document.getElementById(`sp-${ns}-selected`); if (sel) sel.style.display = 'none';
+    const hint = document.getElementById(`sp-${ns}-qty-hint`); if (hint) hint.style.display = 'none';
+  });
+  const rc = document.getElementById('rollCurVal'); if (rc) rc.textContent = '— click a futures expiry below —';
+  const rn = document.getElementById('rollNxtVal'); if (rn) rn.textContent = '— click a futures expiry below —';
+  const ri = document.getElementById('sp-roll-input'); if (ri) ri.value = '';
+  const rd = document.getElementById('sp-roll-dropdown'); if (rd) { rd.classList.remove('show'); rd.innerHTML = ''; }
+  ['cfScSlTgtEnable','cfTrSlTgtEnable'].forEach(id => { const el = document.getElementById(id); if (el) el.checked = false; });
+  toggleSlTgt('sc'); toggleSlTgt('tr');
 }
 
 async function createInstruction() {
@@ -1212,57 +1323,285 @@ async function createInstruction() {
   let body = { type: cfType, label };
   try {
     if (cfType === 'futures_rollover') {
+      const cur = rollSelection.current, nxt = rollSelection.next;
+      if (!cur || !nxt) throw new Error('Pick both a current and next futures expiry');
+      const lots = parseInt(document.getElementById('cfRollLots').value);
+      if (!lots) throw new Error('Enter quantity in lots');
       Object.assign(body, {
         direction:      document.getElementById('cfDir').value,
-        exchange:       document.getElementById('cfExch').value,
-        current_symbol: document.getElementById('cfCurSym').value.trim().toUpperCase(),
-        next_symbol:    document.getElementById('cfNxtSym').value.trim().toUpperCase(),
-        quantity:       parseInt(document.getElementById('cfRollQty').value),
+        exchange:       cur.exchange,
+        current_symbol: cur.tradingsymbol,
+        next_symbol:    nxt.tradingsymbol,
+        quantity:       lots * (cur.lot_size || 1),
         product:        document.getElementById('cfRollProd').value,
         execute_date:   document.getElementById('cfRollDate').value,
         execute_time:   document.getElementById('cfRollTime').value
       });
-      if (!body.current_symbol || !body.next_symbol || !body.quantity || !body.execute_date)
-        throw new Error('Fill all rollover fields');
+      if (!body.execute_date) throw new Error('Pick an execute date');
+
     } else if (cfType === 'scheduled_order') {
+      const sel = SP.sc.selected;
+      if (!sel) throw new Error('Search and pick a symbol');
       const ot = document.getElementById('cfScOrdType').value;
+      const qtyRaw = parseInt(document.getElementById('cfScQty').value) || 0;
+      const quantity = sel.instrument_type === 'EQ' ? qtyRaw : qtyRaw * sel.lot_size;
+      const slTgtEnabled = document.getElementById('cfScSlTgtEnable').checked;
       Object.assign(body, {
-        tradingsymbol:    document.getElementById('cfScSym').value.trim().toUpperCase(),
-        exchange:         document.getElementById('cfScExch').value,
+        tradingsymbol:    sel.tradingsymbol,
+        exchange:         sel.exchange,
         transaction_type: document.getElementById('cfScSide').value,
         product:          document.getElementById('cfScProd').value,
         order_type:       ot,
-        quantity:         parseInt(document.getElementById('cfScQty').value),
+        quantity,
         price:            ot !== 'MARKET' ? parseFloat(document.getElementById('cfScPrice').value) || 0 : 0,
         trigger_price:    (ot === 'SL' || ot === 'SL-M') ? parseFloat(document.getElementById('cfScTrigger').value) || 0 : 0,
         execute_date:     document.getElementById('cfScDate').value,
         execute_time:     document.getElementById('cfScTime').value,
         variety:          document.getElementById('cfScVariety').value
       });
-      if (!body.tradingsymbol || !body.quantity || !body.execute_date)
-        throw new Error('Fill all order fields');
+      if (slTgtEnabled) {
+        const sl = parseFloat(document.getElementById('cfScSlPrice').value);
+        const tgt = parseFloat(document.getElementById('cfScTgtPrice').value);
+        if (!sl || !tgt) throw new Error('Enter both Stop-Loss and Target prices');
+        body.attach_sl_tgt = { enabled: true, sl_price: sl, target_price: tgt };
+      }
+      if (!body.quantity || !body.execute_date) throw new Error('Fill all order fields');
+
     } else if (cfType === 'price_trigger') {
+      const sel = SP.tr.selected;
+      if (!sel) throw new Error('Search and pick a symbol');
+      const qtyRaw = parseInt(document.getElementById('cfTrQty').value) || 0;
+      const quantity = sel.instrument_type === 'EQ' ? qtyRaw : qtyRaw * sel.lot_size;
+      const slTgtEnabled = document.getElementById('cfTrSlTgtEnable').checked;
       Object.assign(body, {
-        tradingsymbol:    document.getElementById('cfTrSym').value.trim().toUpperCase(),
-        exchange:         document.getElementById('cfTrExch').value,
+        tradingsymbol:    sel.tradingsymbol,
+        exchange:         sel.exchange,
         condition:        document.getElementById('cfTrCond').value,
         trigger_price:    parseFloat(document.getElementById('cfTrPrice').value),
         transaction_type: document.getElementById('cfTrSide').value,
         product:          document.getElementById('cfTrProd').value,
         order_type:       document.getElementById('cfTrOrdType').value,
-        quantity:         parseInt(document.getElementById('cfTrQty').value),
+        quantity,
         max_retries:      parseInt(document.getElementById('cfTrRetries').value)
       });
-      if (!body.tradingsymbol || !body.trigger_price || !body.quantity)
-        throw new Error('Fill all trigger fields');
+      if (slTgtEnabled) {
+        const sl = parseFloat(document.getElementById('cfTrSlPrice').value);
+        const tgt = parseFloat(document.getElementById('cfTrTgtPrice').value);
+        if (!sl || !tgt) throw new Error('Enter both Stop-Loss and Target prices');
+        body.attach_sl_tgt = { enabled: true, sl_price: sl, target_price: tgt };
+      }
+      if (!body.quantity || !body.trigger_price) throw new Error('Fill all trigger fields');
     }
 
     await workerFetch('/instructions', { method: 'POST', body: JSON.stringify(body) });
     setAmStatus('cfStatus', 'ok', '✓ Instruction created');
     document.getElementById('cfLabel').value = '';
+    resetCreateForm();
     setTimeout(() => switchAmTab('instr'), 800);
   } catch (e) {
     setAmStatus('cfStatus', 'err', e.message);
+  }
+}
+
+// ── SYMBOL PICKER (ticker search → stock / futures / options) ──
+const SP = {};
+let rollActiveSlotName = 'current';
+let rollSelection = { current: null, next: null };
+
+function spInit(ns) { SP[ns] = { selected: null, ltp: null, close: null, marketOpen: null, underlyingName: null, debounceTimer: null, lastResults: null, chain: null, renderedChain: null }; }
+['sc', 'tr', 'roll'].forEach(spInit);
+
+function spOnInput(ns) {
+  clearTimeout(SP[ns].debounceTimer);
+  const val = v(`sp-${ns}-input`);
+  const dd = document.getElementById(`sp-${ns}-dropdown`);
+  if (!val) { dd.classList.remove('show'); dd.innerHTML = ''; return; }
+  SP[ns].debounceTimer = setTimeout(() => spSearch(ns, val), 300);
+}
+
+async function spSearch(ns, q) {
+  const dd = document.getElementById(`sp-${ns}-dropdown`);
+  dd.innerHTML = '<div class="sp-empty">Searching…</div>';
+  dd.classList.add('show');
+  try {
+    const res = await workerFetch('/instruments/search?q=' + encodeURIComponent(q));
+    if (res.error) { dd.innerHTML = '<div class="sp-empty">' + esc(res.error) + '</div>'; return; }
+    SP[ns].lastResults = res;
+    SP[ns].underlyingName = res.underlyingName;
+    renderSpDropdown(ns, res);
+  } catch (e) {
+    dd.innerHTML = '<div class="sp-empty">' + esc(e.message) + '</div>';
+  }
+}
+
+function renderSpDropdown(ns, res) {
+  const dd = document.getElementById(`sp-${ns}-dropdown`);
+  const rollMode = ns === 'roll';
+  let html = '';
+  if (!rollMode && res.equity && res.equity.length) {
+    html += '<div class="sp-grp-lbl">STOCK</div>';
+    html += res.equity.map((e, i) =>
+      `<div class="sp-item" onclick="spSelectEquity('${ns}',${i})"><span><span class="sp-item-sym">${esc(e.tradingsymbol)}</span> <span class="sp-item-meta">${esc(e.name)}</span></span><span class="sp-item-meta">NSE</span></div>`
+    ).join('');
+  }
+  if (res.futures && res.futures.length) {
+    html += '<div class="sp-grp-lbl">FUTURES</div>';
+    html += res.futures.map((f, i) =>
+      `<div class="sp-item" onclick="spSelectFuture('${ns}',${i})"><span class="sp-item-sym">${esc(f.tradingsymbol)}</span><span class="sp-item-meta">Lot ${f.lot_size} · exp ${esc(f.expiry)}</span></div>`
+    ).join('');
+  }
+  if (!rollMode && res.optionExpiries && res.optionExpiries.length) {
+    html += '<div class="sp-grp-lbl">OPTIONS — pick expiry</div>';
+    html += '<div class="sp-expiry-row">' + res.optionExpiries.map((exp, i) =>
+      `<button type="button" class="sp-expiry-btn" id="sp-${ns}-exp-${i}" onclick="spPickExpiry('${ns}',${i})">${esc(exp)}</button>`
+    ).join('') + '</div>';
+    html += `<div class="sp-chain" id="sp-${ns}-chain"></div>`;
+  }
+  if (!html) html = '<div class="sp-empty">No matches. Try RELIANCE, NIFTY, BANKNIFTY…</div>';
+  dd.innerHTML = html;
+}
+
+async function spSelectEquity(ns, idx) {
+  const e = SP[ns].lastResults.equity[idx];
+  await spApplySelection(ns, { exchange: 'NSE', tradingsymbol: e.tradingsymbol, instrument_type: 'EQ', lot_size: 1, label: e.tradingsymbol + ' (Stock)' });
+}
+
+async function spSelectFuture(ns, idx) {
+  const f = SP[ns].lastResults.futures[idx];
+  if (ns === 'roll') {
+    rollAssign(rollActiveSlotName, f);
+    document.getElementById('sp-roll-dropdown').classList.remove('show');
+    document.getElementById('sp-roll-input').value = '';
+    return;
+  }
+  await spApplySelection(ns, { exchange: f.exchange, tradingsymbol: f.tradingsymbol, instrument_type: 'FUT', lot_size: f.lot_size, label: f.tradingsymbol + ' (Futures, own price — not the underlying)' });
+}
+
+async function spPickExpiry(ns, idx) {
+  const res = SP[ns].lastResults;
+  const exp = res.optionExpiries[idx];
+  document.querySelectorAll(`[id^="sp-${ns}-exp-"]`).forEach(b => b.classList.remove('active'));
+  document.getElementById(`sp-${ns}-exp-${idx}`).classList.add('active');
+  const chainEl = document.getElementById(`sp-${ns}-chain`);
+  chainEl.innerHTML = '<div class="sp-empty">Loading chain…</div>';
+  try {
+    const data = await workerFetch('/instruments/options?name=' + encodeURIComponent(res.underlyingName) + '&expiry=' + encodeURIComponent(exp));
+    SP[ns].chain = data.chain;
+    renderSpChain(ns, res.spot?.last_price);
+  } catch (e) {
+    chainEl.innerHTML = '<div class="sp-empty">' + esc(e.message) + '</div>';
+  }
+}
+
+function renderSpChain(ns, spotPrice) {
+  const chainEl = document.getElementById(`sp-${ns}-chain`);
+  let chain = SP[ns].chain || [];
+  if (spotPrice) {
+    let atmIdx = 0, best = Infinity;
+    chain.forEach((c, i) => { const d = Math.abs(c.strike - spotPrice); if (d < best) { best = d; atmIdx = i; } });
+    chain = chain.slice(Math.max(0, atmIdx - 8), atmIdx + 9);
+  } else {
+    chain = chain.slice(0, 17);
+  }
+  if (!chain.length) { chainEl.innerHTML = '<div class="sp-empty">No strikes found</div>'; return; }
+  SP[ns].renderedChain = chain;
+  chainEl.innerHTML = chain.map((c, i) =>
+    `<div class="sp-chain-row">` +
+      (c.ce ? `<div class="sp-chain-cell ce" onclick="spSelectOption('${ns}',${i},'ce')">CE</div>` : '<div></div>') +
+      `<div class="sp-chain-strike">${c.strike}</div>` +
+      (c.pe ? `<div class="sp-chain-cell pe" onclick="spSelectOption('${ns}',${i},'pe')">PE</div>` : '<div></div>') +
+    `</div>`
+  ).join('');
+}
+
+async function spSelectOption(ns, idx, side) {
+  const c = SP[ns].renderedChain[idx];
+  const opt = side === 'ce' ? c.ce : c.pe;
+  await spApplySelection(ns, { exchange: opt.exchange, tradingsymbol: opt.tradingsymbol, instrument_type: side === 'ce' ? 'CE' : 'PE', lot_size: c.lot_size, label: opt.tradingsymbol + ' (' + side.toUpperCase() + ' ' + c.strike + ')' });
+}
+
+async function spApplySelection(ns, sel) {
+  SP[ns].selected = sel;
+  document.getElementById(`sp-${ns}-dropdown`).classList.remove('show');
+  document.getElementById(`sp-${ns}-input`).value = sel.tradingsymbol;
+  const box = document.getElementById(`sp-${ns}-selected`);
+  box.style.display = 'flex';
+  box.innerHTML =
+    `<div class="sp-selected-info"><div>${esc(sel.label)}</div><div class="sp-sub">${sel.exchange} · Lot size ${sel.lot_size}</div></div>` +
+    `<div class="sp-selected-price" id="sp-${ns}-price">Loading…</div>` +
+    `<button type="button" class="sp-clear-btn" onclick="spClear('${ns}')">CHANGE</button>`;
+  spUpdateQtyHint(ns);
+  await spFetchPrice(ns);
+}
+
+async function spFetchPrice(ns) {
+  const sel = SP[ns].selected;
+  if (!sel) return;
+  const key = sel.exchange + ':' + sel.tradingsymbol;
+  try {
+    const q = await workerFetch('/quotes?i=' + encodeURIComponent(key));
+    const d = q[key];
+    const priceEl = document.getElementById(`sp-${ns}-price`);
+    if (!priceEl || !d) return;
+    SP[ns].ltp = d.last_price; SP[ns].close = d.close; SP[ns].marketOpen = d.market_open;
+    if (d.market_open) {
+      priceEl.textContent = 'LTP ₹' + d.last_price.toFixed(2);
+      priceEl.className = 'sp-selected-price';
+    } else {
+      priceEl.textContent = 'Last Close ₹' + (d.close ?? d.last_price).toFixed(2);
+      priceEl.className = 'sp-selected-price stale';
+    }
+  } catch (e) {
+    const priceEl = document.getElementById(`sp-${ns}-price`);
+    if (priceEl) priceEl.textContent = 'Price unavailable';
+  }
+}
+
+function spClear(ns) {
+  SP[ns].selected = null;
+  document.getElementById(`sp-${ns}-selected`).style.display = 'none';
+  document.getElementById(`sp-${ns}-input`).value = '';
+  const hint = document.getElementById(`sp-${ns}-qty-hint`); if (hint) hint.style.display = 'none';
+}
+
+function spUpdateQtyHint(ns) {
+  const sel = SP[ns].selected;
+  const pfx = ns === 'sc' ? 'Sc' : 'Tr';
+  const hint = document.getElementById(`sp-${ns}-qty-hint`);
+  const lbl = document.getElementById('cf' + pfx + 'QtyLbl');
+  if (!sel || !hint) return;
+  if (sel.instrument_type === 'EQ') {
+    hint.style.display = 'none';
+    if (lbl) lbl.textContent = 'Quantity (shares)';
+    return;
+  }
+  if (lbl) lbl.textContent = 'Lots';
+  const lots = parseInt(v('cf' + pfx + 'Qty')) || 0;
+  hint.style.display = 'block';
+  hint.textContent = lots > 0 ? ('= ' + (lots * sel.lot_size) + ' qty (lot size ' + sel.lot_size + ')') : ('Lot size: ' + sel.lot_size);
+}
+
+// ── Rollover current/next expiry slots ──
+function rollActivateSlot(slot) {
+  rollActiveSlotName = slot;
+  document.getElementById('rollSlotCur').classList.toggle('active', slot === 'current');
+  document.getElementById('rollSlotNxt').classList.toggle('active', slot === 'next');
+}
+function rollAssign(slot, f) {
+  rollSelection[slot] = f;
+  document.getElementById(slot === 'current' ? 'rollCurVal' : 'rollNxtVal').textContent = f.tradingsymbol + ' (lot ' + f.lot_size + ', exp ' + f.expiry + ')';
+  const other = slot === 'current' ? 'next' : 'current';
+  if (!rollSelection[other]) rollActivateSlot(other);
+}
+
+async function refreshInstrumentList() {
+  setAmStatus('amInstrStatus', '', 'Refreshing — this can take a while and may fail on free Cloudflare plans…');
+  try {
+    const res = await workerFetch('/instruments/refresh', { method: 'POST' });
+    if (res.error) { setAmStatus('amInstrStatus', 'err', res.error); return; }
+    setAmStatus('amInstrStatus', 'ok', `✓ Loaded ${res.nseEqCount} stocks, ${res.nfoCount} F&O contracts`);
+  } catch (e) {
+    setAmStatus('amInstrStatus', 'err', e.message);
   }
 }
 

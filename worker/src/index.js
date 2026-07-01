@@ -1,5 +1,7 @@
 import { KiteClient } from './kite.js';
 import { runInstructions } from './executor.js';
+import { searchInstruments, getOptionChain, ensureFreshCache, refreshInstrumentCache } from './instruments.js';
+import { getIST, isMarketOpen } from './ist.js';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -107,6 +109,55 @@ export default {
       return json(result);
     }
 
+    // ── Instrument search (stock / futures / option expiries for a ticker) ──
+    if (path === '/instruments/search' && method === 'GET') {
+      const kite = await getKite(env);
+      const q = url.searchParams.get('q') || '';
+      const cacheAge = await env.KITE_DATA.get('instr:updated_at');
+      if (!cacheAge) return json({ error: 'Instrument list not loaded yet — go to Setup and click "Refresh Instrument List" first.' }, 400);
+      const result = await searchInstruments(env, q, kite);
+      return json(result);
+    }
+
+    // ── Option chain for a specific underlying + expiry ──
+    if (path === '/instruments/options' && method === 'GET') {
+      const name = url.searchParams.get('name');
+      const expiry = url.searchParams.get('expiry');
+      if (!name || !expiry) return json({ error: 'name and expiry required' }, 400);
+      const chain = await getOptionChain(env, name, expiry);
+      return json({ chain });
+    }
+
+    // ── Manually (re)build the instrument cache — heavy op, run from Setup tab ──
+    if (path === '/instruments/refresh' && method === 'POST') {
+      const kite = await getKite(env);
+      if (!kite) return json({ error: 'Kite credentials not configured' }, 400);
+      try {
+        const result = await refreshInstrumentCache(env, kite);
+        return json({ ok: true, ...result });
+      } catch (e) {
+        return json({ error: 'Refresh failed (may exceed CPU limit on free Workers plan): ' + e.message }, 500);
+      }
+    }
+
+    // ── Batch quotes — used by the symbol picker for live LTP / last close ──
+    if (path === '/quotes' && method === 'GET') {
+      const kite = await getKite(env);
+      if (!kite) return json({ error: 'Kite credentials not configured' }, 400);
+      const instruments = url.searchParams.getAll('i');
+      if (!instruments.length) return json({ error: 'at least one ?i= instrument key required' }, 400);
+      const q = await kite.getQuote(instruments);
+      if (q.status !== 'success') return json({ error: q.message || 'Quote fetch failed' }, 502);
+      const marketOpen = isMarketOpen(getIST());
+      const out = {};
+      for (const key of instruments) {
+        const d = q.data?.[key];
+        if (!d) continue;
+        out[key] = { last_price: d.last_price, close: d.ohlc?.close, market_open: marketOpen };
+      }
+      return json(out);
+    }
+
     // ── Instructions CRUD ──
     if (path === '/instructions' && method === 'GET') {
       const ids = await env.KITE_DATA.get('instructions:list', 'json') || [];
@@ -183,5 +234,19 @@ export default {
   // ── Cron handler (every minute) ──────────────────────
   async scheduled(event, env, ctx) {
     ctx.waitUntil(runInstructions(env, event.scheduledTime));
+
+    // Keep instrument cache fresh — only actually refreshes once per day
+    // (cheap KV read short-circuits the rest on every other tick), and only
+    // during a quiet pre-market window so a slow parse doesn't collide with
+    // order-execution ticks.
+    const ist = getIST(event.scheduledTime);
+    if (ist.time >= '07:30' && ist.time <= '07:40') {
+      ctx.waitUntil((async () => {
+        const cfg = await env.KITE_DATA.get('config:kite', 'json');
+        if (!cfg?.apiKey || !cfg?.accessToken) return;
+        const kite = new KiteClient(cfg.apiKey, cfg.accessToken);
+        try { await ensureFreshCache(env, kite); } catch (e) { console.error('[cron] instrument refresh failed:', e.message); }
+      })());
+    }
   }
 };

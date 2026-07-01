@@ -71,4 +71,22 @@ export class KiteClient {
   async getPositions() { return this.get('/portfolio/positions'); }
   async getHoldings()  { return this.get('/portfolio/holdings'); }
   async getOrders()    { return this.get('/orders'); }
+
+  // Raw CSV dump — NOT json, so bypasses _parse()
+  async getInstrumentsCSV(exchange) {
+    const resp = await fetch(`${KITE_BASE}/instruments/${exchange}`, { headers: this._headers() });
+    if (!resp.ok) throw new Error(`Instruments fetch failed for ${exchange}: HTTP ${resp.status}`);
+    return resp.text();
+  }
+
+  // Two-leg (OCO) GTT for SL + Target attached to a filled position.
+  // condition = { exchange, tradingsymbol, trigger_values: [lower, upper], last_price }
+  // orders = [ {exchange,tradingsymbol,transaction_type,quantity,order_type,product,price}, ... ]
+  async placeGTT(type, condition, orders) {
+    return this.post('/gtt/triggers', {
+      type,
+      condition: JSON.stringify(condition),
+      orders: JSON.stringify(orders)
+    });
+  }
 }
