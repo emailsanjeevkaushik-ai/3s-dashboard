@@ -259,6 +259,8 @@ textarea.note-in:focus{border-color:var(--accent);}
 .sp-clear-btn{background:transparent;border:1px solid var(--border2);color:var(--text3);font-family:var(--mono);font-size:9px;padding:4px 8px;border-radius:3px;cursor:pointer;flex-shrink:0;}
 .sp-clear-btn:hover{border-color:var(--red-dim);color:var(--red);}
 .sp-qty-hint{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:-6px;}
+.sp-manual-link{font-family:var(--mono);font-size:10px;color:var(--text3);text-decoration:underline;cursor:pointer;margin-top:6px;}
+.sp-manual-link:hover{color:var(--purple);}
 /* Rollover slots */
 .roll-slot{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:4px;padding:9px 12px;cursor:pointer;transition:border-color .15s;}
 .roll-slot.active{border-color:var(--purple);}
@@ -548,6 +550,11 @@ textarea.note-in:focus{border-color:var(--accent);}
             <div class="sp-dropdown" id="sp-sc-dropdown"></div>
           </div>
           <div class="sp-selected" id="sp-sc-selected" style="display:none"></div>
+          <div class="sp-manual-link" id="sp-sc-manual-link" onclick="spToggleManual('sc')">Can't find it? Enter symbol manually</div>
+          <div class="am-row" id="sp-sc-manual-row" style="display:none">
+            <div class="am-field"><label>Tradingsymbol</label><input type="text" id="sp-sc-manual-sym" placeholder="e.g. RELIANCE"></div>
+            <div class="am-field"><label>Exchange <span>(F&amp;O: enter real qty below, not lots)</span></label><select id="sp-sc-manual-exch"><option>NSE</option><option>BSE</option><option>NFO</option><option>MCX</option><option>CDS</option></select></div>
+          </div>
         </div>
         <div class="am-row">
           <div class="am-field">
@@ -611,6 +618,9 @@ textarea.note-in:focus{border-color:var(--accent);}
 
       <!-- Price Trigger -->
       <div class="cf-section" id="cfTrigger">
+        <div class="sltgt-note" style="border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.08);color:var(--amber)">
+          ⚠ Price Trigger needs a live price feed to check the condition every minute — that requires Kite's <b>paid Connect plan (₹500/mo)</b>, separate from this dashboard. On Kite's free Personal API, this instruction will show a repeating error instead of firing. Scheduled Order and Futures Rollover don't need live prices and work fully free.
+        </div>
         <div class="am-field">
           <label>Symbol to watch &amp; trade <span>(stock, or its futures / options)</span></label>
           <div class="sp-wrap" id="sp-tr">
@@ -618,6 +628,11 @@ textarea.note-in:focus{border-color:var(--accent);}
             <div class="sp-dropdown" id="sp-tr-dropdown"></div>
           </div>
           <div class="sp-selected" id="sp-tr-selected" style="display:none"></div>
+          <div class="sp-manual-link" id="sp-tr-manual-link" onclick="spToggleManual('tr')">Can't find it? Enter symbol manually</div>
+          <div class="am-row" id="sp-tr-manual-row" style="display:none">
+            <div class="am-field"><label>Tradingsymbol</label><input type="text" id="sp-tr-manual-sym" placeholder="e.g. RELIANCE"></div>
+            <div class="am-field"><label>Exchange <span>(F&amp;O: enter real qty below, not lots)</span></label><select id="sp-tr-manual-exch"><option>NSE</option><option>BSE</option><option>NFO</option><option>MCX</option><option>CDS</option></select></div>
+          </div>
         </div>
         <div class="am-row">
           <div class="am-field">
@@ -713,9 +728,9 @@ textarea.note-in:focus{border-color:var(--accent);}
     <div style="margin-bottom:18px">
       <div class="dsec-title" style="margin-bottom:10px">Instrument List (for ticker search)</div>
       <div style="font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:10px 14px;margin-bottom:14px">
-        Powers the ticker search in Create Instruction (stock / futures / options lookup, lot sizes, live prices).
-        Refreshes automatically once a day at 7:30 AM IST — click below to load it now.<br>
-        <span style="color:var(--amber)">⚠ This is a heavy operation. If your Worker is on Cloudflare's free plan, it may fail (CPU limit) — see worker/README.md.</span>
+        Powers the ticker search in Create Instruction (stock / futures / options lookup, lot sizes). Free — just downloads
+        Kite's symbol list and caches it, no paid plan needed. Refreshes automatically every weekday at 6:00 AM IST —
+        click below to load it now (needed once before your first search).
       </div>
       <button class="am-btn green" onclick="refreshInstrumentList()">REFRESH INSTRUMENT LIST NOW</button>
       <div class="am-status" id="amInstrStatus"></div>
@@ -1340,8 +1355,8 @@ async function createInstruction() {
       if (!body.execute_date) throw new Error('Pick an execute date');
 
     } else if (cfType === 'scheduled_order') {
-      const sel = SP.sc.selected;
-      if (!sel) throw new Error('Search and pick a symbol');
+      const sel = SP.sc.selected || spGetManualSelection('sc');
+      if (!sel) throw new Error('Search and pick a symbol, or enter one manually');
       const ot = document.getElementById('cfScOrdType').value;
       const qtyRaw = parseInt(document.getElementById('cfScQty').value) || 0;
       const quantity = sel.instrument_type === 'EQ' ? qtyRaw : qtyRaw * sel.lot_size;
@@ -1368,8 +1383,8 @@ async function createInstruction() {
       if (!body.quantity || !body.execute_date) throw new Error('Fill all order fields');
 
     } else if (cfType === 'price_trigger') {
-      const sel = SP.tr.selected;
-      if (!sel) throw new Error('Search and pick a symbol');
+      const sel = SP.tr.selected || spGetManualSelection('tr');
+      if (!sel) throw new Error('Search and pick a symbol, or enter one manually');
       const qtyRaw = parseInt(document.getElementById('cfTrQty').value) || 0;
       const quantity = sel.instrument_type === 'EQ' ? qtyRaw : qtyRaw * sel.lot_size;
       const slTgtEnabled = document.getElementById('cfTrSlTgtEnable').checked;
@@ -1416,6 +1431,7 @@ function spOnInput(ns) {
   const val = v(`sp-${ns}-input`);
   const dd = document.getElementById(`sp-${ns}-dropdown`);
   if (!val) { dd.classList.remove('show'); dd.innerHTML = ''; return; }
+  if (val.length < 2) { dd.classList.add('show'); dd.innerHTML = '<div class="sp-empty">Type at least 2 characters…</div>'; return; }
   SP[ns].debounceTimer = setTimeout(() => spSearch(ns, val), 300);
 }
 
@@ -1463,7 +1479,7 @@ function renderSpDropdown(ns, res) {
 
 async function spSelectEquity(ns, idx) {
   const e = SP[ns].lastResults.equity[idx];
-  await spApplySelection(ns, { exchange: 'NSE', tradingsymbol: e.tradingsymbol, instrument_type: 'EQ', lot_size: 1, label: e.tradingsymbol + ' (Stock)' });
+  spApplySelection(ns, { exchange: 'NSE', tradingsymbol: e.tradingsymbol, instrument_type: 'EQ', lot_size: 1, ref_price: e.ref_price, label: e.tradingsymbol + ' (Stock)' });
 }
 
 async function spSelectFuture(ns, idx) {
@@ -1474,7 +1490,7 @@ async function spSelectFuture(ns, idx) {
     document.getElementById('sp-roll-input').value = '';
     return;
   }
-  await spApplySelection(ns, { exchange: f.exchange, tradingsymbol: f.tradingsymbol, instrument_type: 'FUT', lot_size: f.lot_size, label: f.tradingsymbol + ' (Futures, own price — not the underlying)' });
+  spApplySelection(ns, { exchange: f.exchange, tradingsymbol: f.tradingsymbol, instrument_type: 'FUT', lot_size: f.lot_size, ref_price: f.ref_price, label: f.tradingsymbol + ' (Futures — its own price, not the underlying)' });
 }
 
 async function spPickExpiry(ns, idx) {
@@ -1487,18 +1503,18 @@ async function spPickExpiry(ns, idx) {
   try {
     const data = await workerFetch('/instruments/options?name=' + encodeURIComponent(res.underlyingName) + '&expiry=' + encodeURIComponent(exp));
     SP[ns].chain = data.chain;
-    renderSpChain(ns, res.spot?.last_price);
+    renderSpChain(ns, res.equity[0]?.ref_price);
   } catch (e) {
     chainEl.innerHTML = '<div class="sp-empty">' + esc(e.message) + '</div>';
   }
 }
 
-function renderSpChain(ns, spotPrice) {
+function renderSpChain(ns, centerPrice) {
   const chainEl = document.getElementById(`sp-${ns}-chain`);
   let chain = SP[ns].chain || [];
-  if (spotPrice) {
+  if (centerPrice) {
     let atmIdx = 0, best = Infinity;
-    chain.forEach((c, i) => { const d = Math.abs(c.strike - spotPrice); if (d < best) { best = d; atmIdx = i; } });
+    chain.forEach((c, i) => { const d = Math.abs(c.strike - centerPrice); if (d < best) { best = d; atmIdx = i; } });
     chain = chain.slice(Math.max(0, atmIdx - 8), atmIdx + 9);
   } else {
     chain = chain.slice(0, 17);
@@ -1517,44 +1533,26 @@ function renderSpChain(ns, spotPrice) {
 async function spSelectOption(ns, idx, side) {
   const c = SP[ns].renderedChain[idx];
   const opt = side === 'ce' ? c.ce : c.pe;
-  await spApplySelection(ns, { exchange: opt.exchange, tradingsymbol: opt.tradingsymbol, instrument_type: side === 'ce' ? 'CE' : 'PE', lot_size: c.lot_size, label: opt.tradingsymbol + ' (' + side.toUpperCase() + ' ' + c.strike + ')' });
+  spApplySelection(ns, { exchange: opt.exchange, tradingsymbol: opt.tradingsymbol, instrument_type: side === 'ce' ? 'CE' : 'PE', lot_size: c.lot_size, ref_price: opt.ref_price, label: opt.tradingsymbol + ' (' + side.toUpperCase() + ' ' + c.strike + ')' });
 }
 
-async function spApplySelection(ns, sel) {
+// Shows the price baked into the instrument list dump (a daily snapshot, not
+// a live quote — live LTP requires Kite's paid Connect plan, which this
+// dashboard intentionally does not depend on). Labeled honestly as such.
+function spApplySelection(ns, sel) {
   SP[ns].selected = sel;
   document.getElementById(`sp-${ns}-dropdown`).classList.remove('show');
   document.getElementById(`sp-${ns}-input`).value = sel.tradingsymbol;
   const box = document.getElementById(`sp-${ns}-selected`);
   box.style.display = 'flex';
+  const priceHtml = sel.ref_price
+    ? `<div class="sp-selected-price stale">Ref ₹${sel.ref_price.toFixed(2)}</div>`
+    : `<div class="sp-selected-price stale">No price data</div>`;
   box.innerHTML =
     `<div class="sp-selected-info"><div>${esc(sel.label)}</div><div class="sp-sub">${sel.exchange} · Lot size ${sel.lot_size}</div></div>` +
-    `<div class="sp-selected-price" id="sp-${ns}-price">Loading…</div>` +
+    priceHtml +
     `<button type="button" class="sp-clear-btn" onclick="spClear('${ns}')">CHANGE</button>`;
   spUpdateQtyHint(ns);
-  await spFetchPrice(ns);
-}
-
-async function spFetchPrice(ns) {
-  const sel = SP[ns].selected;
-  if (!sel) return;
-  const key = sel.exchange + ':' + sel.tradingsymbol;
-  try {
-    const q = await workerFetch('/quotes?i=' + encodeURIComponent(key));
-    const d = q[key];
-    const priceEl = document.getElementById(`sp-${ns}-price`);
-    if (!priceEl || !d) return;
-    SP[ns].ltp = d.last_price; SP[ns].close = d.close; SP[ns].marketOpen = d.market_open;
-    if (d.market_open) {
-      priceEl.textContent = 'LTP ₹' + d.last_price.toFixed(2);
-      priceEl.className = 'sp-selected-price';
-    } else {
-      priceEl.textContent = 'Last Close ₹' + (d.close ?? d.last_price).toFixed(2);
-      priceEl.className = 'sp-selected-price stale';
-    }
-  } catch (e) {
-    const priceEl = document.getElementById(`sp-${ns}-price`);
-    if (priceEl) priceEl.textContent = 'Price unavailable';
-  }
 }
 
 function spClear(ns) {
@@ -1562,6 +1560,21 @@ function spClear(ns) {
   document.getElementById(`sp-${ns}-selected`).style.display = 'none';
   document.getElementById(`sp-${ns}-input`).value = '';
   const hint = document.getElementById(`sp-${ns}-qty-hint`); if (hint) hint.style.display = 'none';
+}
+
+function spToggleManual(ns) {
+  const row = document.getElementById(`sp-${ns}-manual-row`);
+  row.style.display = row.style.display === 'none' ? 'flex' : 'none';
+}
+
+// Manual entry has no lot-size metadata from the instrument list, so quantity
+// is always treated as the literal order quantity (never multiplied by lots)
+// — if trading F&O manually, enter the real quantity (e.g. lot size x lots) yourself.
+function spGetManualSelection(ns) {
+  const sym = v(`sp-${ns}-manual-sym`);
+  if (!sym) return null;
+  const exch = document.getElementById(`sp-${ns}-manual-exch`).value;
+  return { exchange: exch, tradingsymbol: sym.toUpperCase(), instrument_type: 'EQ', lot_size: 1, manual: true };
 }
 
 function spUpdateQtyHint(ns) {
@@ -1595,11 +1608,11 @@ function rollAssign(slot, f) {
 }
 
 async function refreshInstrumentList() {
-  setAmStatus('amInstrStatus', '', 'Refreshing — this can take a while and may fail on free Cloudflare plans…');
+  setAmStatus('amInstrStatus', '', 'Refreshing…');
   try {
     const res = await workerFetch('/instruments/refresh', { method: 'POST' });
     if (res.error) { setAmStatus('amInstrStatus', 'err', res.error); return; }
-    setAmStatus('amInstrStatus', 'ok', `✓ Loaded ${res.nseEqCount} stocks, ${res.nfoCount} F&O contracts`);
+    setAmStatus('amInstrStatus', 'ok', `✓ Instrument list loaded (${(res.nseBytes/1024).toFixed(0)}KB NSE, ${(res.nfoBytes/1024).toFixed(0)}KB NFO)`);
   } catch (e) {
     setAmStatus('amInstrStatus', 'err', e.message);
   }

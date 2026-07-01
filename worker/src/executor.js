@@ -18,10 +18,17 @@ async function shouldExecute(instr, ist, kite) {
       return isMarketOpen(ist) && ist.date === instr.execute_date && ist.time >= instr.execute_time;
 
     case 'price_trigger': {
+      // NOTE: this requires live market data, which needs Kite's paid Connect
+      // plan (₹500/mo) — the free "Personal API" tier does not include quotes.
+      // We surface that as a loud, retried error rather than silently never
+      // firing, so it's obvious in Telegram/history why nothing is happening.
       if (!isMarketOpen(ist)) return false;
       const key = `${instr.exchange}:${instr.tradingsymbol}`;
       const q = await kite.getQuote([key]);
-      if (q.status !== 'success' || !q.data?.[key]) return false;
+      if (q.status !== 'success') {
+        throw new Error('Live quote fetch failed (' + (q.message || 'no data access') + ') — Price Trigger requires Kite\'s paid Connect plan for market data.');
+      }
+      if (!q.data?.[key]) return false;
       const ltp = q.data[key].last_price;
       const prev = instr._last_ltp ?? ltp;
       // Persist last ltp for cross detection (stored on instr in KV by caller)
@@ -136,9 +143,10 @@ async function checkAwaitingFills(env, kite, notify) {
       if (!order) continue; // order not visible yet, try again next minute
 
       if (order.status === 'COMPLETE') {
-        const key = `${instr.exchange}:${instr.tradingsymbol}`;
-        const q = await kite.getQuote([key]);
-        const lastPrice = q.data?.[key]?.last_price || order.average_price || instr.price || 0;
+        // Use the order's own fill price as the GTT reference price — avoids
+        // needing a live quote, which requires Kite's paid data plan. The
+        // free "Personal API" tier covers orders/GTT but not market data.
+        const lastPrice = order.average_price || instr.price || 0;
 
         const gttPayload = buildSlTgtGtt({
           exchange: instr.exchange,
